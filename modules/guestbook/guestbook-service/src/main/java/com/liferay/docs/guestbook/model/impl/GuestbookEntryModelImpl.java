@@ -133,9 +133,11 @@ public class GuestbookEntryModelImpl
 
 	public static final long GUESTBOOKID_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -659,7 +661,19 @@ public class GuestbookEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -937,6 +951,11 @@ public class GuestbookEntryModelImpl
 
 		guestbookEntryModelImpl._setModifiedDate = false;
 
+		guestbookEntryModelImpl._originalStatus =
+			guestbookEntryModelImpl._status;
+
+		guestbookEntryModelImpl._setOriginalStatus = false;
+
 		guestbookEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -1134,6 +1153,8 @@ public class GuestbookEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
