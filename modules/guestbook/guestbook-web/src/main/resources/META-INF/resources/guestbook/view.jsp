@@ -12,6 +12,12 @@
 	<portlet:param name="mvcPath" value="/guestbook/view_search.jsp" />
 </portlet:renderURL>
 
+<%// iteratorURL needs the guestbookId param to generate the right pagination links %>
+<liferay-portlet:renderURL varImpl="iteratorURL">
+	<portlet:param name="mvcPath" value="/guestbook/view.jsp" />
+	<portlet:param name="guestbookId" value="<%=String.valueOf(guestbookId)%>" />
+</liferay-portlet:renderURL>
+
 <aui:form action="${searchURL}" name="fm">
 
 	<div class="row">
@@ -78,7 +84,7 @@
 	</c:if>
 </aui:button-row>
 
-<liferay-ui:search-container delta="5"
+<liferay-ui:search-container delta="5" iteratorURL="${iteratorURL}"
 	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount(scopeGroupId,
 					guestbookId)%>">
 	<liferay-ui:search-container-results
