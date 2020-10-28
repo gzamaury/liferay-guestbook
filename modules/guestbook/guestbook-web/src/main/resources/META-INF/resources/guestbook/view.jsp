@@ -79,10 +79,11 @@
 </aui:button-row>
 
 <liferay-ui:search-container delta="5"
-	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount()%>">
+	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount(scopeGroupId,
+					guestbookId)%>">
 	<liferay-ui:search-container-results
-		results="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntries(scopeGroupId.longValue(),
-						guestbookId, searchContainer.getStart(), searchContainer.getEnd())%>" />
+		results="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntries(scopeGroupId,
+					guestbookId, searchContainer.getStart(), searchContainer.getEnd())%>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.docs.guestbook.model.GuestbookEntry"
