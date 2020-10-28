@@ -54,6 +54,18 @@
 <%@ page import="com.liferay.portal.kernel.util.Validator"%>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil"%>
 
+<%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %>
+<%@ taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %>
+
+<%@ page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.asset.kernel.service.AssetTagLocalServiceUtil" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetTag" %>
+<%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
+<%@ page import="com.liferay.portal.kernel.comment.Discussion" %>
+<%@ page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.ServiceContextFunction" %>
+
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%>
