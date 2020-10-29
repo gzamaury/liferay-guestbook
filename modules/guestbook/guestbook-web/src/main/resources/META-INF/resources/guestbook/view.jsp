@@ -12,7 +12,7 @@
 	<portlet:param name="mvcPath" value="/guestbook/view_search.jsp" />
 </portlet:renderURL>
 
-<%// iteratorURL needs the guestbookId param to generate the right pagination links %>
+<%-- iteratorURL needs the guestbookId param to generate the pagination for the current guestbook --%>
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/guestbook/view.jsp" />
 	<portlet:param name="guestbookId" value="<%=String.valueOf(guestbookId)%>" />
@@ -84,7 +84,8 @@
 	</c:if>
 </aui:button-row>
 
-<liferay-ui:search-container delta="5" iteratorURL="${iteratorURL}"
+<%-- currPage helps to return to the current page from view_entry(the asset view) --%>
+<liferay-ui:search-container delta="5" iteratorURL="${iteratorURL}"	curParam="currPage"
 	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount(scopeGroupId,
 					guestbookId)%>">
 	<liferay-ui:search-container-results
@@ -98,6 +99,9 @@
 		<liferay-ui:search-container-column-text property="message" />
 
 		<liferay-ui:search-container-column-text property="name" />
+
+		<liferay-ui:search-container-row-parameter name="currPage"
+			value="<%=String.valueOf(searchContainer.getCur())%>" />
 
 		<liferay-ui:search-container-column-jsp align="right"
 			path="/guestbook/entry_actions.jsp" />

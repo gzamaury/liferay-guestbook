@@ -7,6 +7,9 @@
 		(ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 	GuestbookEntry entry = (GuestbookEntry) row.getObject();
+	String currPage = (String) row.getParameter("currPage");
+	
+	_log.debug("currPage: " + currPage);
 %>
 
 <liferay-ui:icon-menu>
@@ -15,9 +18,11 @@
 		<portlet:param name="entryId"
 			value="<%=String.valueOf(entry.getEntryId())%>" />
 		<portlet:param name="mvcPath" value="/guestbook/view_entry.jsp" />
+		<portlet:param name="currPage" value="<%=currPage%>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon message="View" url="<%=viewEntryURL.toString()%>" image="view"/>
+	<liferay-ui:icon message="View" url="<%=viewEntryURL.toString()%>"
+		image="view" />
 
 	<c:if
 		test="<%=GuestbookEntryPermission.contains(permissionChecker,
@@ -63,3 +68,5 @@
 	</c:if>
 
 </liferay-ui:icon-menu>
+
+<%!private static Log _log = LogFactoryUtil.getLog("html.guestbook.entry_actions_jsp");%>

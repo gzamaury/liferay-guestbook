@@ -25,15 +25,25 @@
 	List<AssetTag> assetTags = AssetTagLocalServiceUtil
 		.getTags(GuestbookEntry.class.getName(), entry.getEntryId());
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"), request);
+
+	String currPage = ParamUtil.getString(renderRequest, "currPage");
+	_log.debug("currPage: " + currPage);
 %>
 
+<%-- why? --%>
 <liferay-portlet:renderURL varImpl="viewEntryURL">
 	<portlet:param name="mvcPath" value="/guestbook/view_entry.jsp" />
 	<portlet:param name="entryId" value="<%=String.valueOf(entryId)%>" />
 </liferay-portlet:renderURL>
 
+<%-- currPage helps to return to the corresponding page in view.jsp --%>
 <liferay-portlet:renderURL varImpl="viewURL">
 	<portlet:param name="mvcPath" value="/guestbook/view.jsp" />
+	<portlet:param name="guestbookId"
+		value="<%=String.valueOf(entry.getGuestbookId())%>" />
+		
+<%-- <portlet:param name="resetCur" value="false" /> --%>
+	<portlet:param name="currPage" value="<%=currPage%>" />
 </liferay-portlet:renderURL>
 
 <liferay-ui:header backURL="<%=viewURL.toString()%>"
@@ -83,3 +93,5 @@
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 </c:if>
+
+<%!private static Log _log = LogFactoryUtil.getLog("html.guestbook.view_entry_jsp");%>

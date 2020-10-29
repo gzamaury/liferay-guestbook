@@ -104,7 +104,3 @@
 </liferay-ui:search-container>
 
 <%!private static Log _log = LogFactoryUtil.getLog("html.guestbook.view_search_jsp");%>
-
-
-
-
