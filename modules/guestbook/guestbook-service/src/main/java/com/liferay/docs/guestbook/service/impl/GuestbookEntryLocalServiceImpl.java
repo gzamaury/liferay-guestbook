@@ -22,6 +22,10 @@ import com.liferay.docs.guestbook.exception.GuestbookEntryNameException;
 import com.liferay.docs.guestbook.model.GuestbookEntry;
 import com.liferay.docs.guestbook.service.base.GuestbookEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -71,6 +75,16 @@ public class GuestbookEntryLocalServiceImpl extends GuestbookEntryLocalServiceBa
 	 * <code>com.liferay.docs.guestbook.service.GuestbookEntryLocalServiceUtil</code
 	 * >.
 	 */
+
+	public List<Long> findGuestbookEntriesIds(long groupId, long guestbookId) {
+
+		DynamicQuery dq = dynamicQuery().add(RestrictionsFactoryUtil.eq("groupId", groupId))
+			.add(RestrictionsFactoryUtil.eq("guestbookId", guestbookId))
+			.addOrder(OrderFactoryUtil.desc("createDate"))
+			.setProjection(ProjectionFactoryUtil.property("entryId"));
+
+		return guestbookPersistence.findWithDynamicQuery(dq);
+	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookEntry addGuestbookEntry(long userId, long guestbookId, String name,

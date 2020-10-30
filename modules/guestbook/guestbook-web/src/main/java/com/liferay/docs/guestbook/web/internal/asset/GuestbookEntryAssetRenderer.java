@@ -145,8 +145,8 @@ public class GuestbookEntryAssetRenderer extends BaseJSPAssetRenderer<GuestbookE
 
 			portletURL.setParameter("mvcPath", "/guestbook/view_entry.jsp");
 			portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
-			// portletURL.setParameter("mvcPath", "/guestbook/view.jsp");
-			// portletURL.setParameter("guestbookId",String.valueOf(_entry.getGuestbookId()));
+			// set the guestbookId, permits get back to the corresponding guestbook
+			portletURL.setParameter("guestbookId", String.valueOf(_entry.getGuestbookId()));
 
 			String currentUrl = PortalUtil.getCurrentURL(liferayPortletRequest);
 

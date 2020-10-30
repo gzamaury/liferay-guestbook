@@ -218,6 +218,12 @@ public class GuestbookEntryLocalServiceUtil {
 		return getService().fetchGuestbookEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static java.util.List<Long> findGuestbookEntriesIds(
+		long groupId, long guestbookId) {
+
+		return getService().findGuestbookEntriesIds(groupId, guestbookId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -225,6 +225,14 @@ public class GuestbookEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Long> findGuestbookEntriesIds(
+		long groupId, long guestbookId) {
+
+		return _guestbookEntryLocalService.findGuestbookEntriesIds(
+			groupId, guestbookId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

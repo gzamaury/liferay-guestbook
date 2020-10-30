@@ -26,23 +26,42 @@
 		.getTags(GuestbookEntry.class.getName(), entry.getEntryId());
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"), request);
 
+	// the param currPage comes from the search-container in the view.jsp when view_entry 
+	// is call from the guestbook view 
 	String currPage = ParamUtil.getString(renderRequest, "currPage");
-	_log.debug("currPage: " + currPage);
+
+	int delta = 5;
+
+	// when view_entry is called from the asset portlet, the currPage is calculated
+	if (currPage.isEmpty()) {
+		List<Long> allEntriesIds = GuestbookEntryLocalServiceUtil
+			.findGuestbookEntriesIds(scopeGroupId, guestbookId);
+
+		int entryIdx = allEntriesIds.indexOf(entryId);
+		int entryPosition = entryIdx + 1;
+
+		_log.debug("entryPosition: " + entryPosition);
+		currPage = String.valueOf((entryPosition % delta) == 0 ? entryPosition / delta
+			: (entryPosition / delta) + 1);
+
+		_log.debug("currPage: " + currPage);
+	}
 %>
 
-<%-- why? --%>
+<%-- why? 
 <liferay-portlet:renderURL varImpl="viewEntryURL">
 	<portlet:param name="mvcPath" value="/guestbook/view_entry.jsp" />
 	<portlet:param name="entryId" value="<%=String.valueOf(entryId)%>" />
 </liferay-portlet:renderURL>
+--%>
 
 <%-- currPage helps to return to the corresponding page in view.jsp --%>
 <liferay-portlet:renderURL varImpl="viewURL">
 	<portlet:param name="mvcPath" value="/guestbook/view.jsp" />
 	<portlet:param name="guestbookId"
 		value="<%=String.valueOf(entry.getGuestbookId())%>" />
-		
-<%-- <portlet:param name="resetCur" value="false" /> --%>
+
+	<%-- <portlet:param name="resetCur" value="false" /> --%>
 	<portlet:param name="currPage" value="<%=currPage%>" />
 </liferay-portlet:renderURL>
 

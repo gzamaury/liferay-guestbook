@@ -6,6 +6,7 @@
 
 <%
 	long guestbookId = Long.valueOf((Long) renderRequest.getAttribute("guestbookId"));
+	int delta = 5;
 %>
 
 <portlet:renderURL var="searchURL">
@@ -15,7 +16,8 @@
 <%-- iteratorURL needs the guestbookId param to generate the pagination for the current guestbook --%>
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/guestbook/view.jsp" />
-	<portlet:param name="guestbookId" value="<%=String.valueOf(guestbookId)%>" />
+	<portlet:param name="guestbookId"
+		value="<%=String.valueOf(guestbookId)%>" />
 </liferay-portlet:renderURL>
 
 <aui:form action="${searchURL}" name="fm">
@@ -85,13 +87,14 @@
 </aui:button-row>
 
 <%-- currPage helps to return to the current page from view_entry(the asset view) --%>
-<liferay-ui:search-container delta="5" iteratorURL="${iteratorURL}"	curParam="currPage"
+<liferay-ui:search-container delta="<%=delta%>"
+	iteratorURL="${iteratorURL}" curParam="currPage" deltaParam="currDelta" 
 	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount(scopeGroupId,
 					guestbookId)%>">
 	<liferay-ui:search-container-results
 		results="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntries(scopeGroupId,
 					guestbookId, searchContainer.getStart(), searchContainer.getEnd())%>" />
-
+	
 	<liferay-ui:search-container-row
 		className="com.liferay.docs.guestbook.model.GuestbookEntry"
 		modelVar="entry">
@@ -111,3 +114,5 @@
 	<liferay-ui:search-iterator />
 
 </liferay-ui:search-container>
+
+<%!private static Log _log = LogFactoryUtil.getLog("html.guestbook.view_jsp");%>

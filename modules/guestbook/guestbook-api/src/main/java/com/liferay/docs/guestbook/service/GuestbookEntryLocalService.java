@@ -197,6 +197,8 @@ public interface GuestbookEntryLocalService
 	public GuestbookEntry fetchGuestbookEntryByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public List<Long> findGuestbookEntriesIds(long groupId, long guestbookId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

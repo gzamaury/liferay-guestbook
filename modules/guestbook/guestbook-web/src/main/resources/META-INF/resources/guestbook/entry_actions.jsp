@@ -7,8 +7,8 @@
 		(ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 	GuestbookEntry entry = (GuestbookEntry) row.getObject();
-	String currPage = (String) row.getParameter("currPage");
 	
+	String currPage = (String) row.getParameter("currPage");
 	_log.debug("currPage: " + currPage);
 %>
 
