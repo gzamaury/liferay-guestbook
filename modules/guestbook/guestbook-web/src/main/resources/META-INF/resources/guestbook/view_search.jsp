@@ -13,9 +13,9 @@
 	<portlet:param name="mvcPath" value="/guestbook/view.jsp" />
 </portlet:renderURL>
 
-<%// iteratorURL is needed for pagination, the default is the porlet url  %>
+<%-- iteratorURL is needed for pagination, the default is the porlet url --%>
 <liferay-portlet:renderURL varImpl="iteratorURL">
-       <portlet:param name="mvcPath" value="/guestbook/view_search.jsp" />
+	<portlet:param name="mvcPath" value="/guestbook/view_search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="${searchURL}" name="fm">
@@ -64,24 +64,26 @@
 			_log.error(se.getLocalizedMessage());
 		}
 
-		entries.add(entry);
+		if (entry.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			entries.add(entry);
+		}
+
 	}
 
-	List<Guestbook> guestbooks = GuestbookLocalServiceUtil.getGuestbooks(scopeGroupId);
+	List<Guestbook> guestbooks = GuestbookLocalServiceUtil.getGuestbooks(scopeGroupId,
+		WorkflowConstants.STATUS_APPROVED);
 
 	Map<String, String> guestbookMap = new HashMap<String, String>();
 
 	for (Guestbook guestbook : guestbooks) {
 		guestbookMap.put(Long.toString(guestbook.getGuestbookId()), guestbook.getName());
 	}
-	
-	
 %>
 
 <liferay-ui:search-container delta="5" iteratorURL="${iteratorURL}"
 	emptyResultsMessage="no-entries-were-found" total="<%=entries.size()%>">
-	<liferay-ui:search-container-results 
-		results="<%=entries.subList(searchContainer.getStart(), 
+	<liferay-ui:search-container-results
+		results="<%=entries.subList(searchContainer.getStart(),
 					(searchContainer.getEnd() > entries.size() ? entries.size()
 						: searchContainer.getEnd()))%>" />
 
