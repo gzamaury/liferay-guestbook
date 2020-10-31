@@ -396,6 +396,16 @@ public class GuestbookLocalServiceUtil {
 			userId, guestbookId, name, serviceContext);
 	}
 
+	public static com.liferay.docs.guestbook.model.Guestbook updateStatus(
+			long userId, long guestbookId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().updateStatus(
+			userId, guestbookId, status, serviceContext);
+	}
+
 	public static GuestbookLocalService getService() {
 		return _serviceTracker.getService();
 	}
