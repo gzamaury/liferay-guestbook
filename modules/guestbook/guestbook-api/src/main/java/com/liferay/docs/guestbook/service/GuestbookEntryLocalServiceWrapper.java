@@ -287,6 +287,16 @@ public class GuestbookEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.docs.guestbook.model.GuestbookEntry>
+			getGuestbookEntries(
+				long groupId, long guestbookId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookEntryLocalService.getGuestbookEntries(
+			groupId, guestbookId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.docs.guestbook.model.GuestbookEntry>
 		getGuestbookEntries(
 			long groupId, long guestbookId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -348,6 +358,15 @@ public class GuestbookEntryLocalServiceWrapper
 	public int getGuestbookEntriesCount(long groupId, long guestbookId) {
 		return _guestbookEntryLocalService.getGuestbookEntriesCount(
 			groupId, guestbookId);
+	}
+
+	@Override
+	public int getGuestbookEntriesCount(
+			long groupId, long guestbookId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookEntryLocalService.getGuestbookEntriesCount(
+			groupId, guestbookId, status);
 	}
 
 	/**

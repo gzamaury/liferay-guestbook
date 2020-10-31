@@ -989,65 +989,72 @@ public class GuestbookEntryUtil {
 	}
 
 	/**
-	 * Returns all the guestbook entries where groupId = &#63; and status = &#63;.
+	 * Returns all the guestbook entries where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @return the matching guestbook entries
 	 */
-	public static List<GuestbookEntry> findByG_S(long groupId, int status) {
-		return getPersistence().findByG_S(groupId, status);
+	public static List<GuestbookEntry> findByG_G_S(
+		long groupId, long guestbookId, int status) {
+
+		return getPersistence().findByG_G_S(groupId, guestbookId, status);
 	}
 
 	/**
-	 * Returns a range of all the guestbook entries where groupId = &#63; and status = &#63;.
+	 * Returns a range of all the guestbook entries where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param start the lower bound of the range of guestbook entries
 	 * @param end the upper bound of the range of guestbook entries (not inclusive)
 	 * @return the range of matching guestbook entries
 	 */
-	public static List<GuestbookEntry> findByG_S(
-		long groupId, int status, int start, int end) {
+	public static List<GuestbookEntry> findByG_G_S(
+		long groupId, long guestbookId, int status, int start, int end) {
 
-		return getPersistence().findByG_S(groupId, status, start, end);
+		return getPersistence().findByG_G_S(
+			groupId, guestbookId, status, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the guestbook entries where groupId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the guestbook entries where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param start the lower bound of the range of guestbook entries
 	 * @param end the upper bound of the range of guestbook entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching guestbook entries
 	 */
-	public static List<GuestbookEntry> findByG_S(
-		long groupId, int status, int start, int end,
+	public static List<GuestbookEntry> findByG_G_S(
+		long groupId, long guestbookId, int status, int start, int end,
 		OrderByComparator<GuestbookEntry> orderByComparator) {
 
-		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator);
+		return getPersistence().findByG_G_S(
+			groupId, guestbookId, status, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the guestbook entries where groupId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the guestbook entries where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param start the lower bound of the range of guestbook entries
 	 * @param end the upper bound of the range of guestbook entries (not inclusive)
@@ -1055,209 +1062,228 @@ public class GuestbookEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching guestbook entries
 	 */
-	public static List<GuestbookEntry> findByG_S(
-		long groupId, int status, int start, int end,
+	public static List<GuestbookEntry> findByG_G_S(
+		long groupId, long guestbookId, int status, int start, int end,
 		OrderByComparator<GuestbookEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByG_S(
-			groupId, status, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByG_G_S(
+			groupId, guestbookId, status, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
-	 * Returns the first guestbook entry in the ordered set where groupId = &#63; and status = &#63;.
+	 * Returns the first guestbook entry in the ordered set where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching guestbook entry
 	 * @throws NoSuchGuestbookEntryException if a matching guestbook entry could not be found
 	 */
-	public static GuestbookEntry findByG_S_First(
-			long groupId, int status,
+	public static GuestbookEntry findByG_G_S_First(
+			long groupId, long guestbookId, int status,
 			OrderByComparator<GuestbookEntry> orderByComparator)
 		throws com.liferay.docs.guestbook.exception.
 			NoSuchGuestbookEntryException {
 
-		return getPersistence().findByG_S_First(
-			groupId, status, orderByComparator);
+		return getPersistence().findByG_G_S_First(
+			groupId, guestbookId, status, orderByComparator);
 	}
 
 	/**
-	 * Returns the first guestbook entry in the ordered set where groupId = &#63; and status = &#63;.
+	 * Returns the first guestbook entry in the ordered set where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching guestbook entry, or <code>null</code> if a matching guestbook entry could not be found
 	 */
-	public static GuestbookEntry fetchByG_S_First(
-		long groupId, int status,
+	public static GuestbookEntry fetchByG_G_S_First(
+		long groupId, long guestbookId, int status,
 		OrderByComparator<GuestbookEntry> orderByComparator) {
 
-		return getPersistence().fetchByG_S_First(
-			groupId, status, orderByComparator);
+		return getPersistence().fetchByG_G_S_First(
+			groupId, guestbookId, status, orderByComparator);
 	}
 
 	/**
-	 * Returns the last guestbook entry in the ordered set where groupId = &#63; and status = &#63;.
+	 * Returns the last guestbook entry in the ordered set where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching guestbook entry
 	 * @throws NoSuchGuestbookEntryException if a matching guestbook entry could not be found
 	 */
-	public static GuestbookEntry findByG_S_Last(
-			long groupId, int status,
+	public static GuestbookEntry findByG_G_S_Last(
+			long groupId, long guestbookId, int status,
 			OrderByComparator<GuestbookEntry> orderByComparator)
 		throws com.liferay.docs.guestbook.exception.
 			NoSuchGuestbookEntryException {
 
-		return getPersistence().findByG_S_Last(
-			groupId, status, orderByComparator);
+		return getPersistence().findByG_G_S_Last(
+			groupId, guestbookId, status, orderByComparator);
 	}
 
 	/**
-	 * Returns the last guestbook entry in the ordered set where groupId = &#63; and status = &#63;.
+	 * Returns the last guestbook entry in the ordered set where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching guestbook entry, or <code>null</code> if a matching guestbook entry could not be found
 	 */
-	public static GuestbookEntry fetchByG_S_Last(
-		long groupId, int status,
+	public static GuestbookEntry fetchByG_G_S_Last(
+		long groupId, long guestbookId, int status,
 		OrderByComparator<GuestbookEntry> orderByComparator) {
 
-		return getPersistence().fetchByG_S_Last(
-			groupId, status, orderByComparator);
+		return getPersistence().fetchByG_G_S_Last(
+			groupId, guestbookId, status, orderByComparator);
 	}
 
 	/**
-	 * Returns the guestbook entries before and after the current guestbook entry in the ordered set where groupId = &#63; and status = &#63;.
+	 * Returns the guestbook entries before and after the current guestbook entry in the ordered set where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param entryId the primary key of the current guestbook entry
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next guestbook entry
 	 * @throws NoSuchGuestbookEntryException if a guestbook entry with the primary key could not be found
 	 */
-	public static GuestbookEntry[] findByG_S_PrevAndNext(
-			long entryId, long groupId, int status,
+	public static GuestbookEntry[] findByG_G_S_PrevAndNext(
+			long entryId, long groupId, long guestbookId, int status,
 			OrderByComparator<GuestbookEntry> orderByComparator)
 		throws com.liferay.docs.guestbook.exception.
 			NoSuchGuestbookEntryException {
 
-		return getPersistence().findByG_S_PrevAndNext(
-			entryId, groupId, status, orderByComparator);
+		return getPersistence().findByG_G_S_PrevAndNext(
+			entryId, groupId, guestbookId, status, orderByComparator);
 	}
 
 	/**
-	 * Returns all the guestbook entries that the user has permission to view where groupId = &#63; and status = &#63;.
+	 * Returns all the guestbook entries that the user has permission to view where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @return the matching guestbook entries that the user has permission to view
 	 */
-	public static List<GuestbookEntry> filterFindByG_S(
-		long groupId, int status) {
+	public static List<GuestbookEntry> filterFindByG_G_S(
+		long groupId, long guestbookId, int status) {
 
-		return getPersistence().filterFindByG_S(groupId, status);
+		return getPersistence().filterFindByG_G_S(groupId, guestbookId, status);
 	}
 
 	/**
-	 * Returns a range of all the guestbook entries that the user has permission to view where groupId = &#63; and status = &#63;.
+	 * Returns a range of all the guestbook entries that the user has permission to view where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param start the lower bound of the range of guestbook entries
 	 * @param end the upper bound of the range of guestbook entries (not inclusive)
 	 * @return the range of matching guestbook entries that the user has permission to view
 	 */
-	public static List<GuestbookEntry> filterFindByG_S(
-		long groupId, int status, int start, int end) {
+	public static List<GuestbookEntry> filterFindByG_G_S(
+		long groupId, long guestbookId, int status, int start, int end) {
 
-		return getPersistence().filterFindByG_S(groupId, status, start, end);
+		return getPersistence().filterFindByG_G_S(
+			groupId, guestbookId, status, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the guestbook entries that the user has permissions to view where groupId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the guestbook entries that the user has permissions to view where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param start the lower bound of the range of guestbook entries
 	 * @param end the upper bound of the range of guestbook entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching guestbook entries that the user has permission to view
 	 */
-	public static List<GuestbookEntry> filterFindByG_S(
-		long groupId, int status, int start, int end,
+	public static List<GuestbookEntry> filterFindByG_G_S(
+		long groupId, long guestbookId, int status, int start, int end,
 		OrderByComparator<GuestbookEntry> orderByComparator) {
 
-		return getPersistence().filterFindByG_S(
-			groupId, status, start, end, orderByComparator);
+		return getPersistence().filterFindByG_G_S(
+			groupId, guestbookId, status, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the guestbook entries before and after the current guestbook entry in the ordered set of guestbook entries that the user has permission to view where groupId = &#63; and status = &#63;.
+	 * Returns the guestbook entries before and after the current guestbook entry in the ordered set of guestbook entries that the user has permission to view where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param entryId the primary key of the current guestbook entry
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next guestbook entry
 	 * @throws NoSuchGuestbookEntryException if a guestbook entry with the primary key could not be found
 	 */
-	public static GuestbookEntry[] filterFindByG_S_PrevAndNext(
-			long entryId, long groupId, int status,
+	public static GuestbookEntry[] filterFindByG_G_S_PrevAndNext(
+			long entryId, long groupId, long guestbookId, int status,
 			OrderByComparator<GuestbookEntry> orderByComparator)
 		throws com.liferay.docs.guestbook.exception.
 			NoSuchGuestbookEntryException {
 
-		return getPersistence().filterFindByG_S_PrevAndNext(
-			entryId, groupId, status, orderByComparator);
+		return getPersistence().filterFindByG_G_S_PrevAndNext(
+			entryId, groupId, guestbookId, status, orderByComparator);
 	}
 
 	/**
-	 * Removes all the guestbook entries where groupId = &#63; and status = &#63; from the database.
+	 * Removes all the guestbook entries where groupId = &#63; and guestbookId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 */
-	public static void removeByG_S(long groupId, int status) {
-		getPersistence().removeByG_S(groupId, status);
+	public static void removeByG_G_S(
+		long groupId, long guestbookId, int status) {
+
+		getPersistence().removeByG_G_S(groupId, guestbookId, status);
 	}
 
 	/**
-	 * Returns the number of guestbook entries where groupId = &#63; and status = &#63;.
+	 * Returns the number of guestbook entries where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @return the number of matching guestbook entries
 	 */
-	public static int countByG_S(long groupId, int status) {
-		return getPersistence().countByG_S(groupId, status);
+	public static int countByG_G_S(long groupId, long guestbookId, int status) {
+		return getPersistence().countByG_G_S(groupId, guestbookId, status);
 	}
 
 	/**
-	 * Returns the number of guestbook entries that the user has permission to view where groupId = &#63; and status = &#63;.
+	 * Returns the number of guestbook entries that the user has permission to view where groupId = &#63; and guestbookId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
+	 * @param guestbookId the guestbook ID
 	 * @param status the status
 	 * @return the number of matching guestbook entries that the user has permission to view
 	 */
-	public static int filterCountByG_S(long groupId, int status) {
-		return getPersistence().filterCountByG_S(groupId, status);
+	public static int filterCountByG_G_S(
+		long groupId, long guestbookId, int status) {
+
+		return getPersistence().filterCountByG_G_S(
+			groupId, guestbookId, status);
 	}
 
 	/**

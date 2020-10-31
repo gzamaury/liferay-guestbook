@@ -220,6 +220,11 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 		return guestbook;
 	}
 
+	public List<Guestbook> getGuestbooks(long groupId, int status) throws SystemException {
+
+		return guestbookPersistence.findByG_S(groupId, WorkflowConstants.STATUS_APPROVED);
+	}
+
 	public List<Guestbook> getGuestbooks(long groupId) {
 
 		return guestbookPersistence.findByGroupId(groupId);

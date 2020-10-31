@@ -287,6 +287,13 @@ public class GuestbookLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.docs.guestbook.model.Guestbook>
+			getGuestbooks(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().getGuestbooks(groupId, status);
+	}
+
+	public static java.util.List<com.liferay.docs.guestbook.model.Guestbook>
 		getGuestbooks(long groupId, int start, int end) {
 
 		return getService().getGuestbooks(groupId, start, end);

@@ -233,6 +233,21 @@ public class GuestbookEntryLocalServiceImpl extends GuestbookEntryLocalServiceBa
 		return entry;
 	}
 
+	public List<GuestbookEntry> getGuestbookEntries(long groupId, long guestbookId, int status,
+		int start, int end) throws SystemException {
+
+		// start and end?
+		return guestbookEntryPersistence.findByG_G_S(groupId, guestbookId,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public int getGuestbookEntriesCount(long groupId, long guestbookId, int status)
+		throws SystemException {
+
+		return guestbookEntryPersistence.countByG_G_S(groupId, guestbookId,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
 	public GuestbookEntry deleteGuestbookEntry(long entryId) throws PortalException {
 
 		GuestbookEntry entry = guestbookEntryPersistence.findByPrimaryKey(entryId);
