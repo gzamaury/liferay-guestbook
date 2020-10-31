@@ -66,6 +66,8 @@
 <%@ page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %>
 <%@ page import="com.liferay.portal.kernel.service.ServiceContextFunction" %>
 
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%>

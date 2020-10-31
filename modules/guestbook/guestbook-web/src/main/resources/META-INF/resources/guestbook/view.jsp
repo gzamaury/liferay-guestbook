@@ -38,8 +38,8 @@
 <aui:nav cssClass="nav-tabs">
 
 	<%
-		List<Guestbook> guestbooks =
-				GuestbookLocalServiceUtil.getGuestbooks(scopeGroupId);
+		List<Guestbook> guestbooks = GuestbookLocalServiceUtil
+				.getGuestbooks(scopeGroupId, WorkflowConstants.STATUS_APPROVED);
 
 			for (int i = 0; i < guestbooks.size(); i++) {
 
@@ -88,13 +88,14 @@
 
 <%-- currPage helps to return to the current page from view_entry(the asset view) --%>
 <liferay-ui:search-container delta="<%=delta%>"
-	iteratorURL="${iteratorURL}" curParam="currPage" deltaParam="currDelta" 
+	iteratorURL="${iteratorURL}" curParam="currPage" deltaParam="currDelta"
 	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount(scopeGroupId,
-					guestbookId)%>">
+					guestbookId, WorkflowConstants.STATUS_APPROVED)%>">
 	<liferay-ui:search-container-results
 		results="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntries(scopeGroupId,
-					guestbookId, searchContainer.getStart(), searchContainer.getEnd())%>" />
-	
+					guestbookId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
+					searchContainer.getEnd())%>" />
+
 	<liferay-ui:search-container-row
 		className="com.liferay.docs.guestbook.model.GuestbookEntry"
 		modelVar="entry">
