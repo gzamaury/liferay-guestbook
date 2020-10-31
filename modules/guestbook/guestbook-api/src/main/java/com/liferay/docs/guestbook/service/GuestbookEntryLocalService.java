@@ -328,4 +328,9 @@ public interface GuestbookEntryLocalService
 			String email, String message, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public GuestbookEntry updateStatus(
+			long userId, long guestbookId, long entryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 }
