@@ -208,6 +208,7 @@ public class GuestbookEntryLocalServiceImpl extends GuestbookEntryLocalServiceBa
 		return entry;
 	}
 
+	// guestbookId is not used ¬¬
 	public GuestbookEntry updateStatus(long userId, long guestbookId, long entryId, int status,
 		ServiceContext serviceContext) throws PortalException, SystemException {
 
