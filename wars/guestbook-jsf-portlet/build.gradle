@@ -1,0 +1,17 @@
+
+repositories {
+     mavenCentral()
+}
+
+dependencies {
+    providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '2.2'
+    runtime group: 'org.glassfish', name: 'javax.faces', version: '2.2.20'
+    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '6.0.0'
+    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '4.1.4'
+    compile group: 'log4j', name: 'log4j', version: '1.2.14'
+    compile group: 'org.primefaces', name: 'primefaces', version: '7.0'
+    
+    compileOnly project(":modules:guestbook:guestbook-api")
+    compileOnly project(":modules:guestbook:guestbook-service")
+}
+
