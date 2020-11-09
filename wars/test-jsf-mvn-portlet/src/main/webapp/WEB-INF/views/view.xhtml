@@ -9,6 +9,11 @@
 	</h:head>
 	<h:body>
 
+		<alloy:panel id="panelId">
+			<h:outputText styleClass="bold-hello-world"
+				value="#{i18n['test-jsf-mvn-portlet-hello-world']}" />
+		</alloy:panel>
+		<hr />
 		<h:form>
 			<h:messages globalOnly="true" />
 			<h:outputLabel value="#{i18n['enter-your-name']}" />
@@ -20,12 +25,14 @@
 			<br />
 			<h:outputText value="Hello #{testBacking.name}" />
 		</h:form>
-
-		<alloy:panel id="panelId">
-			<h:outputText styleClass="bold-hello-world"
-				value="#{i18n['test-jsf-mvn-portlet-hello-world']}" />
-		</alloy:panel>
-
+		<hr />
+		<ul>
+			<li><em><h:outputText
+						value="Users: #{testBacking.usersCount}" /></em></li>
+			<li><em><h:outputText
+						value="Guestbooks: #{testBacking.guestbooksCount}" /></em></li>
+		</ul>
+		<hr />
 		<ul>
 			<li><em><h:outputText value="#{product.JSF}" /></em></li>
 			<li><em><h:outputText

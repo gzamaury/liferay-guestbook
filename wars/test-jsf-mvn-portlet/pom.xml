@@ -10,34 +10,13 @@
 	<name>test-jsf-mvn-portlet</name>
 	<version>1.0.0</version>
 
-	<properties>
-		<osgi.dynamic.import.package>
-			DynamicImport-Package:\
-			com.liferay.faces.alloy.*,\
-			com.liferay.faces.bridge.*,\
-			com.liferay.faces.portlet.*,\
-			com.liferay.faces.util.*,\
-			com.sun.faces.*,\
-			javax.faces.*,\
-			javax.portlet.faces.*
-		</osgi.dynamic.import.package>
-		<osgi.import.package>
-			Import-Package:\
-			com.liferay.faces.alloy,\
-			com.liferay.faces.bridge.ext,\
-			com.liferay.faces.bridge.impl,\
-			com.sun.faces,\
-			javax.annotation,\
-			javax.faces,\
-			javax.portlet.faces,\
-			net.fortuna.ical4j.*;resolution:=optional,\
-			org.apache.axis.tools.ant.*;resolution:=optional,\
-			org.apache.poi.*;resolution:=optional,\
-			com.swabunga.spell.*;resolution:=optional,\
-			*
-		</osgi.import.package>
-	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.liferay.faces</groupId>
+			<artifactId>com.liferay.faces.alloy</artifactId>
+			<version>4.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.bridge.ext</artifactId>
@@ -48,12 +27,6 @@
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.bridge.impl</artifactId>
 			<version>5.0.0-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.weld.servlet</groupId>
-			<artifactId>weld-servlet</artifactId>
-			<version>2.3.3.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -68,16 +41,25 @@
 			<version>2.2.20</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Uncomment to use Liferay Faces Portal: -->
+		<!-- <dependency> <groupId>com.liferay.faces</groupId> <artifactId>com.liferay.faces.portal</artifactId> 
+			<version>4.0.0</version> </dependency> -->
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>2.2.1</version>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>2.3.3.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.cdi</artifactId>
+			<version>1.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -99,14 +81,29 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.liferay.docs</groupId>
+			<artifactId>com.liferay.docs.guestbook.api</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>7.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Uncomment to use Liferay Faces Portal: -->
-		<!-- <dependency> <groupId>com.liferay.faces</groupId> <artifactId>com.liferay.faces.portal</artifactId> 
-			<version>4.0.0</version> </dependency> -->
 	</dependencies>
 	<build>
 		<plugins>
@@ -122,6 +119,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
+							<skip>false</skip>
 							<target>
 								<mkdir
 									dir="${project.build.outputDirectory}/META-INF/services" />
@@ -151,7 +149,6 @@
 								</echo>
 								<mkdir dir="${project.build.outputDirectory}/WEB-INF" />
 							</target>
-
 						</configuration>
 					</execution>
 				</executions>
@@ -176,7 +173,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.3</version>
@@ -195,7 +191,6 @@
 					</webResources>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>

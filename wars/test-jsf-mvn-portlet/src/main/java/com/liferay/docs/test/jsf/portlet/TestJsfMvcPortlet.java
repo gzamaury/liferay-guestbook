@@ -18,7 +18,6 @@ package com.liferay.docs.test.jsf.portlet;
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 
 import javax.portlet.annotations.InitParameter;
-import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.SecurityRoleRef;
 import javax.portlet.annotations.Supports;
@@ -27,11 +26,11 @@ import javax.portlet.faces.GenericFacesPortlet;
 /**
  * @author Neil Griffin
  */
-@PortletConfiguration(
-	portletName = "test-jsf-mvn-portlet",
-	displayName = {
-		@LocaleString("test-jsf-mvn-portlet")
-	},
+@PortletConfiguration(portletName = "test-jsf-mvn-portlet",
+//	displayName = {
+//		@LocaleString("test-jsf-mvn-portlet")
+//	},
+	resourceBundle = "content.Language",
 	initParams = {
 		@InitParameter(
 			name = "javax.portlet.faces.defaultViewId.view",
@@ -46,9 +45,9 @@ import javax.portlet.faces.GenericFacesPortlet;
 //			value = "/WEB-INF/views/portletHelpMode.xhtml"
 //		),
 	},
-	keywords = {
-		@LocaleString("test-jsf-mvn-portlet")
-	},
+//	keywords = {
+//		@LocaleString("test-jsf-mvn-portlet")
+//	},
 	prefs = {
 //		@Preference(
 //			name = "datePattern",
@@ -65,17 +64,17 @@ import javax.portlet.faces.GenericFacesPortlet;
 		@SecurityRoleRef(roleName = "power-user"),
 		@SecurityRoleRef(roleName = "user")
 	},
-	shortTitle = {
-		@LocaleString("test-jsf-mvn-portlet")
-	},
+//	shortTitle = {
+//		@LocaleString("test-jsf-mvn-portlet")
+//	},
 	supports = @Supports(portletModes = {
 		"view"
 //		,"edit"
 //		,"help"
-	}),
-	title = {
-		@LocaleString("test-jsf-mvn-portlet")
-	}
+	})
+//	,title = {
+//		@LocaleString("test-jsf-mvn-portlet")
+//	}
 )
 @LiferayPortletConfiguration(
 	portletName = "test-jsf-mvn-portlet",
