@@ -1,0 +1,3 @@
+com.sun.faces.config.FacesInitializer
+									com.liferay.faces.util.osgi.internal.FacesThinWabInitializer
+									com.liferay.faces.bridge.servlet.BridgeServletContainerInitializer
