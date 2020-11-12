@@ -4,6 +4,7 @@
 **/.project
 **/.sass-cache
 **/.settings
+**/.checkstyle
 **/bin
 **/build
 **/build_gradle
