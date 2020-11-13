@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<h:messages globalOnly="true" layout="table" />
+		<br />
+		<span class="guestbook_tab"> <h:outputText value=" " />
+		</span>
+		<ui:repeat value="#{guestbookBacking.guestbooks}" var="guestbook">
+			<span
+				class="#{(guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId) ? 'guestbook_tab_active' : 'guestbook_tab'}">
+				<h:outputText
+					rendered="#{guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId}"
+					value="#{guestbook.name}" /> <h:commandLink
+					action="#{guestbookBacking.select(guestbook)}" immediate="true"
+					rendered="#{guestbook.guestbookId != guestbookBacking.selectedGuestbook.guestbookId}"
+					value="#{guestbook.name}">
+					<f:ajax render="@all" />
+				</h:commandLink>
+			</span>
+		</ui:repeat>
+		<span class="guestbook_tab"> <h:outputText value=" " />
+		</span>
+		<br />
+		<br />
+
+		<h:commandButton action="#{guestbookBacking.add}"
+			styleClass="btn btn-default" value=" #{i18n['add-guestbook']} ">
+			<f:ajax render="@all" />
+		</h:commandButton>
+		<h:commandButton action="#{guestbookEntryBacking.add}"
+			styleClass="btn btn-default" value=" #{i18n['add-entry']} ">
+			<f:ajax render="@all" />
+		</h:commandButton>
+		<br />
+		<br />
+
+		<c:choose>
+			<c:when test="#{empty guestbookBacking.entries}">
+				<h:outputText value="#{i18n['no-entries-yet']}" />
+			</c:when>
+			<c:otherwise>
+				<h:dataTable
+					styleClass="table table-bordered table-hover table-striped"
+					rowClasses="table-cell " value="#{guestbookBacking.entries}"
+					var="entry">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['message']}" />
+						</f:facet>
+						<h:outputText value="#{entry.message}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['name']}" />
+						</f:facet>
+						<h:outputText value="#{entry.name}" />
+					</h:column>
+				</h:dataTable>
+			</c:otherwise>
+		</c:choose>
+	</h:form>
+</f:view>
