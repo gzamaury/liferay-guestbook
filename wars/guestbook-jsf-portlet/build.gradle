@@ -11,6 +11,7 @@ dependencies {
     providedCompile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.api', version: '5.0.0-SNAPSHOT'
     providedCompile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '5.0.0-SNAPSHOT'
     providedCompile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '7.0.0-SNAPSHOT'
+    providedCompile group: 'com.liferay.faces', name: 'com.liferay.faces.portal', version: '4.0.0'
     compileOnly group: 'log4j', name: 'log4j', version: '1.2.14'
     
     providedCompile group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '2.3.3.Final'
