@@ -51,6 +51,7 @@ public class GuestbookEntryBacking extends AbstractBacking {
 		guestbookBacking.select(guestbookBacking.getSelectedGuestbook());
 	}
 
+	@Inject
 	@Reference
 	transient GuestbookEntryLocalService guestbookEntryLS;
 

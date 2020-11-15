@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '2.2'
+    //providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '2.2'
     providedCompile group: 'org.glassfish', name: 'javax.faces', version: '2.2.20'
     providedCompile group: 'com.liferay.faces', name: 'com.liferay.faces.util', version: '3.4.0'
     providedCompile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.api', version: '5.0.0-SNAPSHOT'

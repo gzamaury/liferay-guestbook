@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.osgi.service.cdi.annotations.Reference;
@@ -256,9 +257,11 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 		createMainGuestbook();
 	}
 
+	@Inject
 	@Reference
-	GuestbookEntryLocalService guestbookEntryLS;
+	transient GuestbookEntryLocalService guestbookEntryLS;
 
+	@Inject
 	@Reference
 	transient GuestbookLocalService guestbookLS;
 }

@@ -1,23 +1,25 @@
 <?xml version="1.0"?>
 
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<f:view xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:head />
 	<h:body>
-		<f:choose>
-			<f:when test="#{guestbookBacking.editingGuestbook}">
-				<p:include src="/views/guestbook.xhtml" />
-			</f:when>
-			<f:when test="#{guestbookBacking.editingEntry}">
-				<p:include src="/views/guestbook_entry.xhtml" />
-			</f:when>
-			<f:otherwise>
-				<p:include src="/views/master.xhtml" />
-			</f:otherwise>
-		</f:choose>
+		<c:choose>
+			<c:when test="#{guestbookBacking.editingGuestbook}">
+				<ui:include src="guestbook.xhtml" />
+			</c:when>
+			<c:when test="#{guestbookBacking.editingEntry}">
+				<ui:include src="guestbook_entry.xhtml" />
+			</c:when>
+			<c:otherwise>
+				<ui:include src="master.xhtml" />
+			</c:otherwise>
+		</c:choose>
 	</h:body>
 
 </f:view>
