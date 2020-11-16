@@ -4,18 +4,21 @@ import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.model.GuestbookEntry;
 import com.liferay.docs.guestbook.service.GuestbookEntryLocalService;
 import com.liferay.docs.guestbook.service.GuestbookLocalService;
-import com.liferay.docs.guestbook.service.persistence.GuestbookUtil;
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.cdi.annotations.Reference;
 
@@ -44,7 +47,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 	public void add() {
 		setOriginalGuestbook(getSelectedGuestbook());
 
-		Guestbook guestbook = GuestbookUtil.create(0L);
+		Guestbook guestbook = guestbookLS.createGuestbook(0L);
 
 		guestbook.setGroupId(LiferayPortletHelperUtil.getScopeGroupId());
 		setSelectedGuestbook(guestbook);
@@ -53,6 +56,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 	}
 
 	public void cancel() {
+		logger.info("Cancel Button");
 		select(getOriginalGuestbook());
 	}
 
@@ -62,10 +66,18 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 		guestbook.setCompanyId(LiferayPortletHelperUtil.getCompanyId());
 		guestbook.setUserId(LiferayPortletHelperUtil.getUserId());
 
+		Long userId = LiferayPortletHelperUtil.getUserId();
+		PortletRequest pr =
+			(PortletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
 		try {
+			ServiceContext serviceContext =
+				ServiceContextFactory.getInstance(Guestbook.class.getName(), pr);
 
 			if (guestbook.getGuestbookId() == 0) {
-				guestbook = guestbookLS.addGuestbook(guestbook);
+				guestbook =
+					guestbookLS.addGuestbook(userId, guestbook.getName(), serviceContext);
+
 			} else {
 				guestbook = guestbookLS.updateGuestbook(guestbook);
 			}
