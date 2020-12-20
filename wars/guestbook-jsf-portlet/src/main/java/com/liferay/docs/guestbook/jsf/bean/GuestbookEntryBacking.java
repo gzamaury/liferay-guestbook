@@ -14,6 +14,24 @@ import org.osgi.service.cdi.annotations.Reference;
 @RequestScoped
 public class GuestbookEntryBacking extends AbstractBacking {
 
+	private Boolean hasAddPermission;
+
+	public Boolean getHasAddPermission() {
+
+		if (hasAddPermission == null) {
+
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
+			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
+				.hasPermission(scopeGroupId, GuestbookBacking.MODEL, scopeGroupId, "ADD_ENTRY");
+		}
+
+		return hasAddPermission;
+	}
+
+	public void setHasAddPermission(Boolean hasAddPermission) {
+		this.hasAddPermission = hasAddPermission;
+	}
+
 	public void add() {
 		GuestbookEntry entry = guestbookEntryLS.createGuestbookEntry(0L);
 
