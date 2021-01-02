@@ -30,10 +30,12 @@
 		<br />
 
 		<h:commandButton action="#{guestbookBacking.add}"
+			rendered="#{guestbookBacking.hasAddPermission}"
 			styleClass="btn btn-default" value=" #{i18n['add-guestbook']} ">
 			<f:ajax render="@all" />
 		</h:commandButton>
 		<h:commandButton action="#{guestbookEntryBacking.add}"
+			rendered="#{guestbookEntryBacking.hasAddPermission}"
 			styleClass="btn btn-default" value=" #{i18n['add-entry']} ">
 			<f:ajax render="@all" />
 		</h:commandButton>

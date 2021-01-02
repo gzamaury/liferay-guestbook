@@ -22,7 +22,7 @@ dependencies {
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     compileOnly group: 'com.liferay', name: 'com.liferay.bean.portlet.api', version: '2.0.1'
     compileOnly group: 'com.liferay', name: 'com.liferay.bean.portlet.cdi.extension', version: '2.0.7'
-    compileOnly group: "com.liferay", name: "com.liferay.portal.osgi.web.wab.generator.impl", version: "2.0.22.cm310947"
+    compileOnly group: "com.liferay", name: "com.liferay.portal.osgi.web.wab.generator.impl", version: "2.0.22.cm310947.1"
     providedCompile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel', version: '4.35.3'
     providedCompile group: 'com.liferay.portal', name: 'com.liferay.portal.impl', version: '4.12.12'
     compileOnly group: 'javax.el', name: 'javax.el-api', version: '2.2.1'

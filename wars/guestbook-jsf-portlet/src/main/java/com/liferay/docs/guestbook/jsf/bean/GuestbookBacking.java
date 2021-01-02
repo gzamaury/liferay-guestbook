@@ -44,7 +44,8 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 	private boolean editingGuestbook;
 	private boolean editingEntry;
 
-	public static final String MODEL = "com.liferay.docs.guestbook.model";
+	public static final String ROOT_MODEL = "com.liferay.docs.guestbook";
+	public static final String GUESTBOOK_MODEL = "com.liferay.docs.guestbook.model.Guestbook";
 
 	private Boolean hasAddPermission;
 	private Boolean hasViewPermission;
@@ -55,7 +56,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
 			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
-				.hasPermission(scopeGroupId, MODEL, scopeGroupId, "ADD_GUESTBOOK");
+				.hasPermission(scopeGroupId, ROOT_MODEL, scopeGroupId, "ADD_GUESTBOOK");
 		}
 
 		return hasAddPermission;
@@ -71,7 +72,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
 			hasViewPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
-				.hasPermission(scopeGroupId, "com.liferay.docs.guestbook.model.Guestbook",
+				.hasPermission(scopeGroupId, ROOT_MODEL, scopeGroupId, "VIEW");
 					scopeGroupId, "VIEW");
 		}
 
@@ -117,7 +118,8 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 					guestbookLS.addGuestbook(userId, guestbook.getName(), serviceContext);
 
 			} else {
-				guestbook = guestbookLS.updateGuestbook(guestbook);
+				guestbook = guestbookLS.updateGuestbook(userId, guestbook.getGuestbookId(),
+					guestbook.getName(), serviceContext);
 			}
 
 			addGlobalSuccessInfoMessage();
