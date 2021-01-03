@@ -1,7 +1,7 @@
 package com.liferay.docs.guestbook.jsf.bean;
 
-import com.liferay.docs.guestbook.model.GuestbookEntry;
 import com.liferay.docs.guestbook.service.GuestbookEntryLocalService;
+import com.liferay.docs.guestbook.wrappers.GuestbookEntry;
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -51,7 +51,7 @@ public class GuestbookEntryBacking extends AbstractBacking {
 	}
 
 	public void add() {
-		GuestbookEntry entry = guestbookEntryLS.createGuestbookEntry(0L);
+		GuestbookEntry entry = new GuestbookEntry(guestbookEntryLS.createGuestbookEntry(0L));
 
 		entry.setGroupId(LiferayPortletHelperUtil.getScopeGroupId());
 		entry.setGuestbookId(guestbookBacking.getSelectedGuestbook().getGuestbookId());
@@ -65,7 +65,7 @@ public class GuestbookEntryBacking extends AbstractBacking {
 
 	public void save() {
 
-		GuestbookEntry entry = guestbookBacking.getSelectedEntry();
+		GuestbookEntry entry = new GuestbookEntry(guestbookBacking.getSelectedEntry());
 
 		entry.setCompanyId(LiferayPortletHelperUtil.getCompanyId());
 		entry.setUserId(LiferayPortletHelperUtil.getUserId());

@@ -1,9 +1,9 @@
 package com.liferay.docs.guestbook.jsf.bean;
 
-import com.liferay.docs.guestbook.model.Guestbook;
-import com.liferay.docs.guestbook.model.GuestbookEntry;
 import com.liferay.docs.guestbook.service.GuestbookEntryLocalService;
 import com.liferay.docs.guestbook.service.GuestbookLocalService;
+import com.liferay.docs.guestbook.wrappers.Guestbook;
+import com.liferay.docs.guestbook.wrappers.GuestbookEntry;
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -95,7 +95,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 	public void add() {
 		setOriginalGuestbook(getSelectedGuestbook());
 
-		Guestbook guestbook = guestbookLS.createGuestbook(0L);
+		Guestbook guestbook = new Guestbook(guestbookLS.createGuestbook(0L));
 
 		guestbook.setGroupId(LiferayPortletHelperUtil.getScopeGroupId());
 		setSelectedGuestbook(guestbook);
@@ -123,12 +123,12 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 				ServiceContextFactory.getInstance(Guestbook.class.getName(), pr);
 
 			if (guestbook.getGuestbookId() == 0) {
-				guestbook =
-					guestbookLS.addGuestbook(userId, guestbook.getName(), serviceContext);
+				guestbook = new Guestbook(
+					guestbookLS.addGuestbook(userId, guestbook.getName(), serviceContext));
 
 			} else {
-				guestbook = guestbookLS.updateGuestbook(userId, guestbook.getGuestbookId(),
-					guestbook.getName(), serviceContext);
+				guestbook = new Guestbook(guestbookLS.updateGuestbook(userId,
+					guestbook.getGuestbookId(), guestbook.getName(), serviceContext));
 			}
 
 			addGlobalSuccessInfoMessage();
@@ -170,16 +170,18 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 		try {
 
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
-			List<Guestbook> guestbooks = guestbookLS.getGuestbooks(scopeGroupId);
+			List<com.liferay.docs.guestbook.model.Guestbook> guestbooks =
+				guestbookLS.getGuestbooks(scopeGroupId);
 
-			Guestbook defaultGuestbook = guestbooks.isEmpty() ? null : guestbooks.get(0);
+			Guestbook defaultGuestbook =
+				guestbooks.isEmpty() ? null : new Guestbook(guestbooks.get(0));
 
 			// Create the default guestbook if it does not exist in the database
 			if (defaultGuestbook == null) {
 				logger.info("postConstruct: creating a default guestbook named "
 					+ DEFAULT_GUESTBOOK_NAME + " ...");
 
-				Guestbook guestbook = guestbookLS.createGuestbook(0L);
+				Guestbook guestbook = new Guestbook(guestbookLS.createGuestbook(0L));
 				guestbook.setName(DEFAULT_GUESTBOOK_NAME);
 				guestbook.setGroupId(scopeGroupId);
 				guestbook.setCompanyId(LiferayPortletHelperUtil.getCompanyId());
@@ -213,11 +215,11 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 				if (selectedGuestbook == null) {
 					logger.info("getEntries: selectedGuestbook == null ... ");
 				} else {
-					List<GuestbookEntry> list = guestbookEntryLS
+					List<com.liferay.docs.guestbook.model.GuestbookEntry> list = guestbookEntryLS
 						.getGuestbookEntries(scopeGroupId, selectedGuestbook.getGuestbookId());
 
-					for (GuestbookEntry entry : list) {
-						entries.add(entry);
+					for (com.liferay.docs.guestbook.model.GuestbookEntry entry : list) {
+						entries.add(new GuestbookEntry(entry));
 					}
 				}
 
@@ -241,10 +243,11 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 			try {
 				guestbooks = new ArrayList<Guestbook>();
 
-				List<Guestbook> list = guestbookLS.getGuestbooks(scopeGroupId);
+				List<com.liferay.docs.guestbook.model.Guestbook> list =
+					guestbookLS.getGuestbooks(scopeGroupId);
 
-				for (Guestbook guestbook : list) {
-					guestbooks.add(guestbook);
+				for (com.liferay.docs.guestbook.model.Guestbook guestbook : list) {
+					guestbooks.add(new Guestbook(guestbook));
 				}
 			} catch (SystemException e) {
 				logger.error(e);
@@ -275,9 +278,11 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 
 			try {
 
-				List<Guestbook> guestbooks = guestbookLS.getGuestbooks(scopeGroupId);
+				List<com.liferay.docs.guestbook.model.Guestbook> guestbooks =
+					guestbookLS.getGuestbooks(scopeGroupId);
 
-				Guestbook firstGuestbookByName = guestbooks.isEmpty() ? null : guestbooks.get(0);
+				Guestbook firstGuestbookByName =
+					guestbooks.isEmpty() ? null : new Guestbook(guestbooks.get(0));
 
 				if (firstGuestbookByName == null) {
 					logger.info(
