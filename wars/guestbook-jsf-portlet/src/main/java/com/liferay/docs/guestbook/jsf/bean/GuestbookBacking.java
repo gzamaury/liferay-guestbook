@@ -73,7 +73,6 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
 			hasViewPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
 				.hasPermission(scopeGroupId, ROOT_MODEL, scopeGroupId, "VIEW");
-					scopeGroupId, "VIEW");
 		}
 
 		return hasViewPermission;
