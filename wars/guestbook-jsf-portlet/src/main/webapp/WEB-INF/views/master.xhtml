@@ -12,17 +12,22 @@
 		<span class="guestbook_tab"> <h:outputText value=" " />
 		</span>
 		<ui:repeat value="#{guestbookBacking.guestbooks}" var="guestbook">
-			<span
-				class="#{(guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId) ? 'guestbook_tab_active' : 'guestbook_tab'}">
-				<h:outputText
-					rendered="#{guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId}"
-					value="#{guestbook.name}" /> <h:commandLink
-					action="#{guestbookBacking.select(guestbook)}" immediate="true"
-					rendered="#{guestbook.guestbookId != guestbookBacking.selectedGuestbook.guestbookId}"
-					value="#{guestbook.name}">
-					<f:ajax render="@all" />
-				</h:commandLink>
-			</span>
+
+			<h:panelGroup
+				rendered="#{guestbookBacking.isGuestBookViewable(guestbook.guestbookId)}">
+
+				<span
+					class="#{(guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId) ? 'guestbook_tab_active' : 'guestbook_tab'}">
+					<h:outputText
+						rendered="#{guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId}"
+						value="#{guestbook.name}" /> <h:commandLink
+						action="#{guestbookBacking.select(guestbook)}" immediate="true"
+						rendered="#{guestbook.guestbookId != guestbookBacking.selectedGuestbook.guestbookId}"
+						value="#{guestbook.name}">
+						<f:ajax render="@all" />
+					</h:commandLink>
+				</span>
+			</h:panelGroup>
 		</ui:repeat>
 		<span class="guestbook_tab"> <h:outputText value=" " />
 		</span>
@@ -55,13 +60,19 @@
 						<f:facet name="header">
 							<h:outputText value="#{i18n['message']}" />
 						</f:facet>
-						<h:outputText value="#{entry.message}" />
+						<h:panelGroup
+							rendered="#{guestbookEntryBacking.isGuestBookEntryViewable(entry.entryId)}">
+							<h:outputText value="#{entry.message}" />
+						</h:panelGroup>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{i18n['name']}" />
 						</f:facet>
-						<h:outputText value="#{entry.name}" />
+						<h:panelGroup
+							rendered="#{guestbookEntryBacking.isGuestBookEntryViewable(entry.entryId)}">
+							<h:outputText value="#{entry.name}" />
+						</h:panelGroup>
 					</h:column>
 				</h:dataTable>
 			</c:otherwise>
