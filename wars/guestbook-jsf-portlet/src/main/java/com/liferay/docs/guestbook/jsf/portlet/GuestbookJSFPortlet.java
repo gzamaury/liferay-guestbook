@@ -26,9 +26,9 @@ import javax.portlet.faces.GenericFacesPortlet;
 /**
  * @author gzamaury
  */
-@PortletConfiguration(portletName = "guestbook-jsf",
+@PortletConfiguration(portletName = "guestbook-jsf-portlet",
 //	displayName = {
-//		@LocaleString("guestbook-jsf")
+//		@LocaleString("guestbook-jsf-portlet")
 //	},
 	resourceBundle = "content.Language",
 	initParams = {
@@ -46,7 +46,7 @@ import javax.portlet.faces.GenericFacesPortlet;
 //		),
 	},
 //	keywords = {
-//		@LocaleString("guestbook-jsf")
+//		@LocaleString("guestbook-jsf-portlet")
 //	},
 	prefs = {
 //		@Preference(
@@ -65,7 +65,7 @@ import javax.portlet.faces.GenericFacesPortlet;
 		@SecurityRoleRef(roleName = "user")
 	},
 //	shortTitle = {
-//		@LocaleString("guestbook-jsf")
+//		@LocaleString("guestbook-jsf-portlet")
 //	},
 	supports = @Supports(portletModes = {
 		"view"
@@ -73,11 +73,11 @@ import javax.portlet.faces.GenericFacesPortlet;
 //		,"help"
 	})
 //	,title = {
-//		@LocaleString("guestbook-jsf")
+//		@LocaleString("guestbook-jsf-portlet")
 //	}
 )
 @LiferayPortletConfiguration(
-	portletName = "guestbook-jsf",
+	portletName = "guestbook-jsf-portlet",
 	properties = {
 		"com.liferay.portlet.ajaxable=false",
 		"com.liferay.portlet.display-category=category.sample",
