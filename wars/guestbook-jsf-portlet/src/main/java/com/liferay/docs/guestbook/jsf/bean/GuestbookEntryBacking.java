@@ -36,6 +36,16 @@ public class GuestbookEntryBacking extends AbstractBacking {
 		return hasAddPermission;
 	}
 
+	public Boolean isGuestBookEntryViewable(Long guestbookEntryId) {
+
+		long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
+		Boolean guestBookEntryViewable =
+			LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
+				.hasPermission(scopeGroupId, GUESTBOOKENTRY_MODEL, guestbookEntryId, "VIEW");
+
+		return guestBookEntryViewable;
+	}
+
 	public void setHasAddPermission(Boolean hasAddPermission) {
 		this.hasAddPermission = hasAddPermission;
 	}
