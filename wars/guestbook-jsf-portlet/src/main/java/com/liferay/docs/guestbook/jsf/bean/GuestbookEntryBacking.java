@@ -1,6 +1,7 @@
 package com.liferay.docs.guestbook.jsf.bean;
 
 import com.liferay.docs.guestbook.service.GuestbookEntryLocalService;
+import com.liferay.docs.guestbook.wrappers.Guestbook;
 import com.liferay.docs.guestbook.wrappers.GuestbookEntry;
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -18,9 +19,6 @@ import org.osgi.service.cdi.annotations.Reference;
 @RequestScoped
 public class GuestbookEntryBacking extends AbstractBacking {
 
-	public static final String GUESTBOOKENTRY_MODEL =
-		"com.liferay.docs.guestbook.model.GuestbookEntry";
-
 	private Boolean hasAddPermission;
 
 	public Boolean getHasAddPermission() {
@@ -29,21 +27,11 @@ public class GuestbookEntryBacking extends AbstractBacking {
 
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
 			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
-				.hasPermission(scopeGroupId, GuestbookBacking.GUESTBOOK_MODEL,
+				.hasPermission(scopeGroupId, Guestbook.GUESTBOOK_MODEL,
 					guestbookBacking.getSelectedGuestbook().getGuestbookId(), "ADD_ENTRY");
 		}
 
 		return hasAddPermission;
-	}
-
-	public Boolean isGuestBookEntryViewable(Long guestbookEntryId) {
-
-		long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
-		Boolean guestBookEntryViewable =
-			LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
-				.hasPermission(scopeGroupId, GUESTBOOKENTRY_MODEL, guestbookEntryId, "VIEW");
-
-		return guestBookEntryViewable;
 	}
 
 	public void setHasAddPermission(Boolean hasAddPermission) {

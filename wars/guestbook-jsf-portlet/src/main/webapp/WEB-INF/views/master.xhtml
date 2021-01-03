@@ -12,10 +12,7 @@
 		<span class="guestbook_tab"> <h:outputText value=" " />
 		</span>
 		<ui:repeat value="#{guestbookBacking.guestbooks}" var="guestbook">
-
-			<h:panelGroup
-				rendered="#{guestbookBacking.isGuestBookViewable(guestbook.guestbookId)}">
-
+			<h:panelGroup rendered="#{guestbook.viewable}">
 				<span
 					class="#{(guestbook.guestbookId == guestbookBacking.selectedGuestbook.guestbookId) ? 'guestbook_tab_active' : 'guestbook_tab'}">
 					<h:outputText
@@ -60,8 +57,7 @@
 						<f:facet name="header">
 							<h:outputText value="#{i18n['message']}" />
 						</f:facet>
-						<h:panelGroup
-							rendered="#{guestbookEntryBacking.isGuestBookEntryViewable(entry.entryId)}">
+						<h:panelGroup rendered="#{entry.viewable}">
 							<h:outputText value="#{entry.message}" />
 						</h:panelGroup>
 					</h:column>
@@ -69,8 +65,7 @@
 						<f:facet name="header">
 							<h:outputText value="#{i18n['name']}" />
 						</f:facet>
-						<h:panelGroup
-							rendered="#{guestbookEntryBacking.isGuestBookEntryViewable(entry.entryId)}">
+						<h:panelGroup rendered="#{entry.viewable}">
 							<h:outputText value="#{entry.name}" />
 						</h:panelGroup>
 					</h:column>

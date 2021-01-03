@@ -45,7 +45,6 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 	private boolean editingEntry;
 
 	public static final String ROOT_MODEL = "com.liferay.docs.guestbook";
-	public static final String GUESTBOOK_MODEL = "com.liferay.docs.guestbook.model.Guestbook";
 
 	private Boolean hasAddPermission;
 	private Boolean hasViewPermission;
@@ -76,16 +75,6 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 		}
 
 		return hasViewPermission;
-	}
-
-	public Boolean isGuestBookViewable(Long guestbookId) {
-
-		long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
-		Boolean guestBookViewable =
-			LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker()
-				.hasPermission(scopeGroupId, GUESTBOOK_MODEL, guestbookId, "VIEW");
-
-		return guestBookViewable;
 	}
 
 	public void setHasViewPermission(Boolean hasViewPermission) {
