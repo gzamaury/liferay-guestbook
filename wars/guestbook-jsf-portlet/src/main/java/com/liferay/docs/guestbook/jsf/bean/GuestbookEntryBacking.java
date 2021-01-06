@@ -19,6 +19,24 @@ import org.osgi.service.cdi.annotations.Reference;
 @RequestScoped
 public class GuestbookEntryBacking extends AbstractBacking {
 
+	public void edit(GuestbookEntry entry) {
+		guestbookBacking.setSelectedEntry(entry);
+		guestbookBacking.editEntry();
+	}
+
+	public void delete(GuestbookEntry entry) {
+
+		try {
+			guestbookEntryLS.deleteGuestbookEntry(entry);
+			addGlobalSuccessInfoMessage();
+		} catch (Exception e) {
+			addGlobalUnexpectedErrorMessage();
+			logger.error(e);
+		}
+
+		guestbookBacking.select(guestbookBacking.getSelectedGuestbook());
+	}
+
 	private Boolean hasAddPermission;
 
 	public Boolean getHasAddPermission() {
