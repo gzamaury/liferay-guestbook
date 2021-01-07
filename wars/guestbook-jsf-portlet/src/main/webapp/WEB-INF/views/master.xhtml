@@ -5,7 +5,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:portal="http://liferay.com/faces/portal">
+	xmlns:portal="http://liferay.com/faces/portal"
+	xmlns:portlet="http://xmlns.jcp.org/portlet_3_0">
 
 	<h:form>
 		<h:messages globalOnly="true" layout="table" />
@@ -90,18 +91,38 @@
 							modelResource="com.liferay.docs.guestbook.model.GuestbookEntry"
 							modelResourceDescription="#{entry.name}"
 							resourcePrimKey="#{entry.entryId}" var="permissionsUrl"
-							windowState="maximized">
+							windowState="pop_up">
 						</portal:permissionsURL>
 
-						<h:outputLink
+						<portlet:namespace var="nameSpace" />
+						<h:commandButton
 							rendered="#{liferay.userHasPortletPermission['PERMISSIONS']}"
-							styleClass="btn btn-default" value="#{permissionsUrl}">
-							<h:outputText value=" #{i18n['permissions']} " />
-						</h:outputLink>
-
+							styleClass="btn btn-default" value="#{i18n['permissions']}"
+							onclick="javascript: showPermissionsGBEntriesPopup('#{permissionsUrl}')">
+							<f:ajax render="@none" />
+						</h:commandButton>
 					</h:column>
-
 				</h:dataTable>
+				<h:outputScript>				
+					function showPermissionsGBEntriesPopup(url) {
+						var url = url;
+
+						Liferay.Util.openWindow({
+							dialog: {
+								centered: true,
+								constrain2view: true,
+								resizable: false,
+								render: true,
+								cache: false,
+								modal: true
+							},
+							dialogIframe: {
+								bodyCssClass: 'dialog-with-footer'
+							},
+							uri: url
+           				});
+					}
+				</h:outputScript>
 			</c:otherwise>
 		</c:choose>
 	</h:form>
