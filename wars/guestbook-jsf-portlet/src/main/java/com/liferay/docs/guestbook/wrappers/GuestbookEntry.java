@@ -13,7 +13,49 @@ public class GuestbookEntry extends GuestbookEntryWrapper {
 
 	public GuestbookEntry(com.liferay.docs.guestbook.model.GuestbookEntry guestbookEntry) {
 		super(guestbookEntry);
-		// TODO Auto-generated constructor stub
+	}
+
+	private Boolean deleteable;
+	private Boolean permissible;
+	private Boolean updateable;
+
+	public Boolean getDeleteable() {
+
+		if (deleteable == null) {
+
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
+			deleteable =
+				LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker().hasPermission(
+					scopeGroupId, GUESTBOOKENTRY_MODEL, getEntryId(), ActionKeys.DELETE);
+		}
+
+		return deleteable;
+	}
+
+	public Boolean getPermissible() {
+
+		if (permissible == null) {
+
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
+			permissible =
+				LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker().hasPermission(
+					scopeGroupId, GUESTBOOKENTRY_MODEL, getEntryId(), ActionKeys.PERMISSIONS);
+		}
+
+		return permissible;
+	}
+
+	public Boolean getUpdateable() {
+
+		if (updateable == null) {
+
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
+			updateable =
+				LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker().hasPermission(
+					scopeGroupId, GUESTBOOKENTRY_MODEL, getEntryId(), ActionKeys.UPDATE);
+		}
+
+		return updateable;
 	}
 
 	public static final String GUESTBOOKENTRY_MODEL =
