@@ -1,0 +1,4 @@
+Bundle-Name: logging-module
+Bundle-SymbolicName: logging.module
+Bundle-Version: 1.0.0
+Export-Package:
