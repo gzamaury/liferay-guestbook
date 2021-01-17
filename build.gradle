@@ -1,0 +1,12 @@
+repositories {
+		mavenCentral()
+        mavenLocal()
+    }
+
+subprojects { subproject ->
+
+    repositories {
+    	mavenCentral()
+        mavenLocal()
+    }
+}

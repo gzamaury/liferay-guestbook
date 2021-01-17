@@ -3,11 +3,17 @@ apply plugin: "maven"
 group = "com.liferay.docs"
 version = "1.0"
 
+repositories {
+     mavenCentral()
+     mavenLocal()
+}
+
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: '1.0.0'
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 }
+
