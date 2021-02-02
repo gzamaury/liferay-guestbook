@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://xmlns.jcp.org/xml/ns/portlet"
+	version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd">
+
+	<portlet>
+		<portlet-name>test-jsf-mvn-portlet</portlet-name>
+		<display-name>JSF OSGi+CDI Test</display-name>
+		<portlet-class>com.liferay.docs.test.jsf.portlet.TestJSFMvnPortlet</portlet-class>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/WEB-INF/views/test-jsf-mvn/view.xhtml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.testjsfmvn.Language</resource-bundle>
+		<portlet-info>
+			<title>JSF OSGi+CDI Test</title>
+			<short-title>JSF OSGi+CDI Test</short-title>
+			<keywords>JSF OSGi+CDI Test</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+
+	<portlet>
+		<portlet-name>test-jsf-mvn-admin-portlet</portlet-name>
+		<display-name>JSF OSGi+CDI Admin Test</display-name>
+		<portlet-class>com.liferay.docs.test.jsf.portlet.TestAdminJSFMvnPortlet</portlet-class>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/WEB-INF/views/test-admin-jsf-mvn/view.xhtml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.testadminjsfmvn.Language</resource-bundle>
+		<portlet-info>
+			<title>JSF OSGi+CDI Admin Test</title>
+			<short-title>JSF OSGi+CDI Admin Test</short-title>
+			<keywords>JSF OSGi+CDI Admin Test</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+</portlet-app>

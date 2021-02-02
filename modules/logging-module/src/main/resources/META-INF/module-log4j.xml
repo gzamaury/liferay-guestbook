@@ -6,7 +6,7 @@
 		<priority value="DEBUG" />
 	</category>
 	<category name="com.liferay.portal.tools.deploy">
-		<priority value="DEBUG" /> 
+		<priority value="DEBUG" />
 	</category>
 	<category name="com.liferay.portal.deploy">
 		<priority value="DEBUG" />
@@ -23,10 +23,18 @@
 	<category name="com.liferay.portal.osgi.web.wab">
 		<priority value="DEBUG" />
 	</category>
-
-<!--
-	<category name="">
+	<category name="com.liferay.bean.portlet.cdi">
 		<priority value="DEBUG" />
 	</category>
--->
+	<category name="com.liferay.portlet.internal">
+		<priority value="DEBUG" />
+	</category>
+	<category name="com.liferay.faces.bridge">
+		<priority value="DEBUG" />
+	</category>
+	<category name="javax.portlet.faces">
+		<priority value="DEBUG" />
+	</category>
+
+	<!-- <category name=""> <priority value="DEBUG" /> </category> -->
 </log4j:configuration>
