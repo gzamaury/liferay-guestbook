@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://xmlns.jcp.org/xml/ns/portlet"
+	version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd">
+
+	<portlet>
+		<portlet-name>guestbook-jsf-portlet</portlet-name>
+		<display-name>Guestbook JSF</display-name>
+		<portlet-class>com.liferay.docs.guestbook.jsf.portlet.GuestbookJSFPortlet</portlet-class>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/WEB-INF/views/guestbook/view.xhtml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.guestbookjsf.Language</resource-bundle>
+		<portlet-info>
+			<title>Guestbook JSF</title>
+			<short-title>Guestbook JSF</short-title>
+			<keywords>Guestbook JSF</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>guestbook-admin-jsf-portlet</portlet-name>
+		<display-name>Guestbooks JSF</display-name>
+		<portlet-class>com.liferay.docs.guestbook.jsf.portlet.GuestbookAdminJSFPortlet</portlet-class>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/WEB-INF/views/guestbook-admin/view.xhtml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.guestbookadminjsf.Language</resource-bundle>
+		<portlet-info>
+			<title>Guestbooks JSF</title>
+			<short-title>Guestbooks JSF</short-title>
+			<keywords>Guestbooks JSF</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+
+
+</portlet-app>

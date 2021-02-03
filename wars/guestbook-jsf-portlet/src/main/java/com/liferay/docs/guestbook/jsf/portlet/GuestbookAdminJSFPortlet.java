@@ -21,5 +21,5 @@ import javax.portlet.faces.GenericFacesPortlet;
  * @author gzamaury
  */
 
-public class GuestbookJSFPortlet extends GenericFacesPortlet {
+public class GuestbookAdminJSFPortlet extends GenericFacesPortlet {
 }

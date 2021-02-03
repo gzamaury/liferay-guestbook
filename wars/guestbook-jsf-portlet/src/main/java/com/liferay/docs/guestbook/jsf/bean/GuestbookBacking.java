@@ -46,6 +46,62 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 
 	public static final String ROOT_MODEL = "com.liferay.docs.guestbook";
 
+	public void edit(Guestbook guestbook) {
+		setSelectedGuestbook(guestbook);
+		editGuestbook();
+	}
+
+	public void delete(Guestbook guestbook) {
+
+		entries = getEntries();
+		deleteGuestbookEntries();
+
+		PortletRequest pr =
+			(PortletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+		try {
+
+			ServiceContext serviceContext =
+				ServiceContextFactory.getInstance(Guestbook.class.getName(), pr);
+
+			guestbookLS.deleteGuestbook(guestbook.getGroupId(), serviceContext);
+			addGlobalSuccessInfoMessage();
+		} catch (Exception e) {
+			addGlobalUnexpectedErrorMessage();
+			logger.error(e);
+		}
+
+		// Re-create the Main Guestbook if we just delete the Main Guestbook ...
+		if (DEFAULT_GUESTBOOK_NAME.equals(guestbook.getName())) {
+			createMainGuestbook();
+		}
+
+		// We just deleted the selected Guestbook so ...
+		this.selectedGuestbook = null;
+
+		// Force Guestbooks and entries to reload
+		setGuestbooks(null);
+		setEntries(null);
+
+		// Go back to the guestbook_actions view
+		select(null);
+	}
+
+	public void deleteGuestbookEntries() {
+
+		for (GuestbookEntry entry : entries) {
+
+			try {
+
+				guestbookEntryLS.deleteGuestbookEntry(entry);
+				addGlobalSuccessInfoMessage();
+			} catch (Exception e) {
+				addGlobalUnexpectedErrorMessage();
+				logger.error(e);
+			}
+		}
+	}
+
 	private Boolean hasAddPermission;
 	private Boolean hasViewPermission;
 
