@@ -64,7 +64,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 			ServiceContext serviceContext =
 				ServiceContextFactory.getInstance(Guestbook.class.getName(), pr);
 
-			guestbookLS.deleteGuestbook(guestbook.getGroupId(), serviceContext);
+			guestbookLS.deleteGuestbook(guestbook.getGuestbookId(), serviceContext);
 			addGlobalSuccessInfoMessage();
 		} catch (Exception e) {
 			addGlobalUnexpectedErrorMessage();
@@ -212,6 +212,9 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 
 	public void createMainGuestbook() {
 
+		PortletRequest pr =
+			(PortletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
 		try {
 
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId();
@@ -231,7 +234,12 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 				guestbook.setGroupId(scopeGroupId);
 				guestbook.setCompanyId(LiferayPortletHelperUtil.getCompanyId());
 				guestbook.setUserId(LiferayPortletHelperUtil.getUserId());
-				guestbookLS.addGuestbook(guestbook);
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(Guestbook.class.getName(), pr);
+
+				guestbookLS.addGuestbook(guestbook.getUserId(), guestbook.getName(),
+					serviceContext);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

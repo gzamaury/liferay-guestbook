@@ -12,13 +12,13 @@
 	<h:body>
 		<c:choose>
 			<c:when test="#{guestbookBacking.editingGuestbook}">
-				<ui:include src="guestbook.xhtml" />
+				<ui:include src="/WEB-INF/views/guestbook/guestbook.xhtml" />
 			</c:when>
 			<c:when test="#{guestbookBacking.editingEntry}">
-				<ui:include src="guestbook_entry.xhtml" />
+				<ui:include src="/WEB-INF/views/guestbook/guestbook_entry.xhtml" />
 			</c:when>
 			<c:otherwise>
-				<ui:include src="master.xhtml" />
+				<ui:include src="/WEB-INF/views/guestbook/master.xhtml" />
 			</c:otherwise>
 		</c:choose>
 	</h:body>
