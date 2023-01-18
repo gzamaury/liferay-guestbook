@@ -23,7 +23,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "java -version && curl -L https://raw.githubusercontent.com/liferay/liferay-blade-cli/master/cli/installers/local | sh && echo 'export PATH=\"$PATH:$HOME/jpm/bin\"' >> ~/.bashrc",
+	"postCreateCommand": "java -version && curl -L https://raw.githubusercontent.com/liferay/liferay-blade-cli/master/cli/installers/local | sh && echo 'export PATH=\"$PATH:$HOME/jpm/bin\"' >> ~/.bashrc && . ~/.bashrc",
 
 	// Configure tool-specific properties.
 	// "customizations": {},
