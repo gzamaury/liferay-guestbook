@@ -11,17 +11,17 @@
 			"installMaven": "false",
 			"installGradle": "false"
 		}
-	}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
+	"postCreateCommand": "java -version && curl -L https://raw.githubusercontent.com/liferay/liferay-blade-cli/master/cli/installers/local | sh && echo 'export PATH=\"$PATH:$HOME/jpm/bin\"' >> ~/.bashrc"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	//"remoteUser": "root"
 }
