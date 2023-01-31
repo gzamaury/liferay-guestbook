@@ -631,8 +631,6 @@ public class GuestbookEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
 		_createDate = createDate;
 	}
 
@@ -892,16 +890,16 @@ public class GuestbookEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof GuestbookEntry)) {
+		if (!(object instanceof GuestbookEntry)) {
 			return false;
 		}
 
-		GuestbookEntry guestbookEntry = (GuestbookEntry)obj;
+		GuestbookEntry guestbookEntry = (GuestbookEntry)object;
 
 		long primaryKey = guestbookEntry.getPrimaryKey();
 
@@ -930,33 +928,26 @@ public class GuestbookEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		GuestbookEntryModelImpl guestbookEntryModelImpl = this;
+		_originalUuid = _uuid;
 
-		guestbookEntryModelImpl._originalUuid = guestbookEntryModelImpl._uuid;
+		_originalGuestbookId = _guestbookId;
 
-		guestbookEntryModelImpl._originalGuestbookId =
-			guestbookEntryModelImpl._guestbookId;
+		_setOriginalGuestbookId = false;
 
-		guestbookEntryModelImpl._setOriginalGuestbookId = false;
+		_originalGroupId = _groupId;
 
-		guestbookEntryModelImpl._originalGroupId =
-			guestbookEntryModelImpl._groupId;
+		_setOriginalGroupId = false;
 
-		guestbookEntryModelImpl._setOriginalGroupId = false;
+		_originalCompanyId = _companyId;
 
-		guestbookEntryModelImpl._originalCompanyId =
-			guestbookEntryModelImpl._companyId;
+		_setOriginalCompanyId = false;
 
-		guestbookEntryModelImpl._setOriginalCompanyId = false;
+		_setModifiedDate = false;
+		_originalStatus = _status;
 
-		guestbookEntryModelImpl._setModifiedDate = false;
+		_setOriginalStatus = false;
 
-		guestbookEntryModelImpl._originalStatus =
-			guestbookEntryModelImpl._status;
-
-		guestbookEntryModelImpl._setOriginalStatus = false;
-
-		guestbookEntryModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1064,7 +1055,7 @@ public class GuestbookEntryModelImpl
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+			(4 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -1096,7 +1087,7 @@ public class GuestbookEntryModelImpl
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+			(5 * attributeGetterFunctions.size()) + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());

@@ -3760,16 +3760,16 @@ public class GuestbookPersistenceImpl
 		"guestbook.status = ?";
 
 	public GuestbookPersistenceImpl() {
-		setModelClass(Guestbook.class);
-
-		setModelImplClass(GuestbookImpl.class);
-		setModelPKClass(long.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
 
 		setDBColumnNames(dbColumnNames);
+
+		setModelClass(Guestbook.class);
+
+		setModelImplClass(GuestbookImpl.class);
+		setModelPKClass(long.class);
 	}
 
 	/**
@@ -4069,7 +4069,7 @@ public class GuestbookPersistenceImpl
 		try {
 			session = openSession();
 
-			if (guestbook.isNew()) {
+			if (isNew) {
 				session.save(guestbook);
 
 				guestbook.setNew(false);
@@ -4644,6 +4644,7 @@ public class GuestbookPersistenceImpl
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(GuestbookImpl.class.getName());
+
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);

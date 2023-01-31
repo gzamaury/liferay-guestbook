@@ -37,17 +37,17 @@ public class GuestbookEntryCacheModel
 	implements CacheModel<GuestbookEntry>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof GuestbookEntryCacheModel)) {
+		if (!(object instanceof GuestbookEntryCacheModel)) {
 			return false;
 		}
 
 		GuestbookEntryCacheModel guestbookEntryCacheModel =
-			(GuestbookEntryCacheModel)obj;
+			(GuestbookEntryCacheModel)object;
 
 		if ((entryId == guestbookEntryCacheModel.entryId) &&
 			(mvccVersion == guestbookEntryCacheModel.mvccVersion)) {

@@ -61,11 +61,15 @@ public interface GuestbookLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link GuestbookLocalServiceUtil} to access the guestbook local service. Add custom service methods to <code>com.liferay.docs.guestbook.service.impl.GuestbookLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.docs.guestbook.service.impl.GuestbookLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the guestbook local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link GuestbookLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
 	 * Adds the guestbook to the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param guestbook the guestbook
 	 * @return the guestbook that was added
@@ -90,6 +94,10 @@ public interface GuestbookLocalService
 	/**
 	 * Deletes the guestbook from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param guestbook the guestbook
 	 * @return the guestbook that was removed
 	 */
@@ -98,6 +106,10 @@ public interface GuestbookLocalService
 
 	/**
 	 * Deletes the guestbook with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param guestbookId the primary key of the guestbook
 	 * @return the guestbook that was removed
@@ -311,6 +323,10 @@ public interface GuestbookLocalService
 
 	/**
 	 * Updates the guestbook in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param guestbook the guestbook
 	 * @return the guestbook that was updated
