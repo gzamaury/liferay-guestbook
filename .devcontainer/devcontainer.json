@@ -13,14 +13,14 @@
 
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
+			"version": "8",
 			"installMaven": "false",
 			"installGradle": "false"
 		}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "java -version && curl -L https://raw.githubusercontent.com/liferay/liferay-blade-cli/master/cli/installers/local | sh && echo 'export PATH=\"$PATH:$HOME/jpm/bin\"' >> ~/.bashrc && . ~/.bashrc",
