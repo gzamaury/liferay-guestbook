@@ -791,16 +791,16 @@ public class GuestbookModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Guestbook)) {
+		if (!(object instanceof Guestbook)) {
 			return false;
 		}
 
-		Guestbook guestbook = (Guestbook)obj;
+		Guestbook guestbook = (Guestbook)object;
 
 		long primaryKey = guestbook.getPrimaryKey();
 
@@ -829,25 +829,22 @@ public class GuestbookModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		GuestbookModelImpl guestbookModelImpl = this;
+		_originalUuid = _uuid;
 
-		guestbookModelImpl._originalUuid = guestbookModelImpl._uuid;
+		_originalGroupId = _groupId;
 
-		guestbookModelImpl._originalGroupId = guestbookModelImpl._groupId;
+		_setOriginalGroupId = false;
 
-		guestbookModelImpl._setOriginalGroupId = false;
+		_originalCompanyId = _companyId;
 
-		guestbookModelImpl._originalCompanyId = guestbookModelImpl._companyId;
+		_setOriginalCompanyId = false;
 
-		guestbookModelImpl._setOriginalCompanyId = false;
+		_setModifiedDate = false;
+		_originalStatus = _status;
 
-		guestbookModelImpl._setModifiedDate = false;
+		_setOriginalStatus = false;
 
-		guestbookModelImpl._originalStatus = guestbookModelImpl._status;
-
-		guestbookModelImpl._setOriginalStatus = false;
-
-		guestbookModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -936,7 +933,7 @@ public class GuestbookModelImpl
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+			(4 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -968,7 +965,7 @@ public class GuestbookModelImpl
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+			(5 * attributeGetterFunctions.size()) + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());

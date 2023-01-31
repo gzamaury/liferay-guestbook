@@ -269,7 +269,7 @@ public class GuestbookBacking extends AbstractBacking implements Serializable {
 					logger.info("getEntries: selectedGuestbook == null ... ");
 				} else {
 					List<com.liferay.docs.guestbook.model.GuestbookEntry> list = guestbookEntryLS
-						.getGuestbookEntries(scopeGroupId, selectedGuestbook.getGuestbookId());
+						.getFilteredGuestbookEntries(scopeGroupId, selectedGuestbook.getGuestbookId());
 
 					for (com.liferay.docs.guestbook.model.GuestbookEntry entry : list) {
 						entries.add(new GuestbookEntry(entry));

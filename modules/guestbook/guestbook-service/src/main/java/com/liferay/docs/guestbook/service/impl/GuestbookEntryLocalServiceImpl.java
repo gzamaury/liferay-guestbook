@@ -208,7 +208,7 @@ public class GuestbookEntryLocalServiceImpl extends GuestbookEntryLocalServiceBa
 		return entry;
 	}
 
-	// guestbookId is not used ¬¬ and needs @Indexable to be showed in the Asset
+	// guestbookId is not used ï¿½ï¿½ and needs @Indexable to be showed in the Asset
 	// Portlet
 	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookEntry updateStatus(long userId, long guestbookId, long entryId, int status,
@@ -280,6 +280,22 @@ public class GuestbookEntryLocalServiceImpl extends GuestbookEntryLocalServiceBa
 
 	public int getGuestbookEntriesCount(long groupId, long guestbookId) {
 		return guestbookEntryPersistence.countByG_G(groupId, guestbookId);
+	}
+
+	public List<GuestbookEntry> getFilteredGuestbookEntries(long groupId, long guestbookId) {
+		return guestbookEntryPersistence.filterFindByG_G(groupId, guestbookId);
+	}
+
+	public List<GuestbookEntry> getFilteredGuestbookEntries(long groupId, long guestbookId, int status,
+		int start, int end) throws SystemException {
+
+		// start and end? yes, needed to show a proper pagination
+		return guestbookEntryPersistence.filterFindByG_G_S(groupId, guestbookId,
+			WorkflowConstants.STATUS_APPROVED, start, end);
+	}
+
+	public int getFilteredGuestbookEntriesCount(long groupId, long guestbookId, int status) {
+		return guestbookEntryPersistence.filterCountByG_G_S(groupId, guestbookId, status);
 	}
 
 	protected void validate(String name, String email, String entry) throws PortalException {

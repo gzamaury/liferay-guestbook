@@ -89,10 +89,10 @@
 <%-- currPage helps to return to the current page from view_entry(the asset view) --%>
 <liferay-ui:search-container delta="<%=delta%>"
 	iteratorURL="${iteratorURL}" curParam="currPage" deltaParam="currDelta"
-	total="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntriesCount(scopeGroupId,
+	total="<%=GuestbookEntryLocalServiceUtil.getFilteredGuestbookEntriesCount(scopeGroupId,
 					guestbookId, WorkflowConstants.STATUS_APPROVED)%>">
 	<liferay-ui:search-container-results
-		results="<%=GuestbookEntryLocalServiceUtil.getGuestbookEntries(scopeGroupId,
+		results="<%=GuestbookEntryLocalServiceUtil.getFilteredGuestbookEntries(scopeGroupId,
 					guestbookId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 					searchContainer.getEnd())%>" />
 

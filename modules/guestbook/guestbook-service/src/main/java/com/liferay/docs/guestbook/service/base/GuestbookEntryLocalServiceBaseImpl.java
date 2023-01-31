@@ -88,6 +88,10 @@ public abstract class GuestbookEntryLocalServiceBaseImpl
 	/**
 	 * Adds the guestbook entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param guestbookEntry the guestbook entry
 	 * @return the guestbook entry that was added
 	 */
@@ -114,6 +118,10 @@ public abstract class GuestbookEntryLocalServiceBaseImpl
 	/**
 	 * Deletes the guestbook entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param entryId the primary key of the guestbook entry
 	 * @return the guestbook entry that was removed
 	 * @throws PortalException if a guestbook entry with the primary key could not be found
@@ -128,6 +136,10 @@ public abstract class GuestbookEntryLocalServiceBaseImpl
 
 	/**
 	 * Deletes the guestbook entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param guestbookEntry the guestbook entry
 	 * @return the guestbook entry that was removed
@@ -505,6 +517,10 @@ public abstract class GuestbookEntryLocalServiceBaseImpl
 
 	/**
 	 * Updates the guestbook entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GuestbookEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param guestbookEntry the guestbook entry
 	 * @return the guestbook entry that was updated
