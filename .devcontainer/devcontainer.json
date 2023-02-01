@@ -39,8 +39,8 @@
 
 		// Avoiding VS Code extension reinstalls for a non-root user
 		// https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
-		"source=lif-gb_exts,target=/node/.vscode-server/extensions,type=volume",
-		"source=lif-gb_exts-insiders,target=/node/.vscode-server-insiders/extensions,type=volume",
+		"source=lif-gb_exts,target=/home/vscode/.vscode-server/extensions,type=volume",
+		"source=lif-gb_exts-insiders,target=/home/vscode/.vscode-server-insiders/extensions,type=volume",
 
 		// Persist bash history for a non-root user
 		// https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
