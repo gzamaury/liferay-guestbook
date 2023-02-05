@@ -47,7 +47,10 @@
 		"source=lif-gb_bashhistory,target=/commandhistory,type=volume",
 
 		// Sharing local Liferay repository
-		"source=/home/gzamaury/.liferay,target=/home/vscode/.liferay,type=bind,consistency=cached"
+		"source=/home/gzamaury/.liferay,target=/home/vscode/.liferay,type=bind,consistency=cached",
+
+		// Sharing local Gradle repository
+		"source=/home/gzamaury/.gradle,target=/home/vscode/.gradle,type=bind,consistency=cached"
 	]
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.

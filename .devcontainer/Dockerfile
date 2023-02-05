@@ -29,3 +29,8 @@ RUN mkdir -p /home/$USERNAME/.vscode-server/extensions \
 RUN mkdir -p /home/$USERNAME/.liferay \
     && chown -R $USERNAME \
         /home/$USERNAME/.liferay
+
+# Sharing local Gradle repository
+RUN mkdir -p /home/$USERNAME/.gradle \
+    && chown -R $USERNAME \
+        /home/$USERNAME/.gradle
