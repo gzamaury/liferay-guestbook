@@ -1,4 +1,5 @@
 buildscript {
+	// https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-workspace
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "4.1.9"
 		classpath group: "net.saliman", name: "gradle-properties-plugin", version: "1.5.2"
