@@ -2,26 +2,38 @@ apply plugin: "maven"
 
 version = "1.0"
 
+// tasks.withType(JavaCompile) {
+
+// 	// Generated classes using Jodd library are unable to be read when compiled against JDK 11
+
+// 	sourceCompatibility = JavaVersion.VERSION_1_8
+// 	targetCompatibility = JavaVersion.VERSION_1_8
+// }
+
+	// Improved Dependency Management 
+	// - https://liferay.dev/blogs/-/blogs/liferay-portal-7-3-ce-ga2-release
+	// - https://liferay.dev/blogs/-/blogs/introducing-the-mega-jar-
+	// - https://learn.liferay.com/dxp/latest/en/liferay-internals/fundamentals/configuring-dependencies/specifying-dependencies.html
+
+	// Command Line Gogo Shell
+	// - https://learn.liferay.com/dxp/latest/en/liferay-internals/fundamentals/using-the-gogo-shell/command-line-gogo-shell.html
+	// - https://learn.liferay.com/dxp/latest/en/liferay-internals/fundamentals/using-the-gogo-shell/gogo-shell-commands.html
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.petra.io"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: '1.0.0'
-	compileOnly group: "org.osgi", name: "org.osgi.core"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.3.7-ga8"
+	// compileOnly group: "com.liferay", name: "com.liferay.petra.io"
+	// compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
+	// compileOnly group: "com.liferay", name: "com.liferay.petra.string"
+	// compileOnly group: "com.liferay", name: "com.liferay.petra.sql.dsl.api"
+	// compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api"
+	// compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	// compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: '1.0.0'
+	// compileOnly group: "org.osgi", name: "org.osgi.core"
+	// compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+	
 	compileOnly project(":modules:guestbook:guestbook-api")
 	
-	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.model.adapter"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect"
-	
-	compileOnly group: "com.liferay", name: "com.liferay.portal.search.spi"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.search.api"
-	
-	compileOnly group: "javax.portlet", name: "portlet-api"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api"
+	// compileOnly group: "javax.portlet", name: "portlet-api"
+	// compileOnly group: "javax.servlet", name: "javax.servlet-api"
 }
 
 buildService {
