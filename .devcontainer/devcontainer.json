@@ -26,7 +26,15 @@
 	"postCreateCommand": "java -version && curl -L https://raw.githubusercontent.com/liferay/liferay-blade-cli/master/cli/installers/local | sh && echo 'export PATH=\"$PATH:$HOME/jpm/bin\"' >> ~/.bashrc && . ~/.bashrc",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"richardwillis.vscode-gradle-extension-pack",
+				"vscjava.vscode-java-pack",
+				"leosj29.jsf-primefaces-intellisense"
+			]
+		}
+	},
 
 	// Add another local file mount
 	// https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
