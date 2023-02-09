@@ -92,6 +92,12 @@ public interface GuestbookLocalService
 	public Guestbook createGuestbook(long guestbookId);
 
 	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	 * Deletes the guestbook from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>

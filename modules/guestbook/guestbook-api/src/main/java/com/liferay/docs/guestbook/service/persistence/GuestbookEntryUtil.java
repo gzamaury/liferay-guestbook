@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * The persistence utility for the guestbook entry service. This utility wraps <code>com.liferay.docs.guestbook.service.persistence.impl.GuestbookEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -1437,26 +1433,9 @@ public class GuestbookEntryUtil {
 	}
 
 	public static GuestbookEntryPersistence getPersistence() {
-		return _serviceTracker.getService();
+		return _persistence;
 	}
 
-	private static ServiceTracker
-		<GuestbookEntryPersistence, GuestbookEntryPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			GuestbookEntryPersistence.class);
-
-		ServiceTracker<GuestbookEntryPersistence, GuestbookEntryPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<GuestbookEntryPersistence, GuestbookEntryPersistence>(
-						bundle.getBundleContext(),
-						GuestbookEntryPersistence.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile GuestbookEntryPersistence _persistence;
 
 }

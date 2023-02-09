@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.docs.guestbook.service.http.GuestbookServiceSoap}.
  *
  * @author liferay
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class GuestbookSoap implements Serializable {
 
 	public static GuestbookSoap toSoapModel(Guestbook model) {

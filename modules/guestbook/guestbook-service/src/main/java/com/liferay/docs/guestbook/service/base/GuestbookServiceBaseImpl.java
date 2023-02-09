@@ -16,6 +16,7 @@ package com.liferay.docs.guestbook.service.base;
 
 import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.service.GuestbookService;
+import com.liferay.docs.guestbook.service.GuestbookServiceUtil;
 import com.liferay.docs.guestbook.service.persistence.GuestbookEntryPersistence;
 import com.liferay.docs.guestbook.service.persistence.GuestbookPersistence;
 import com.liferay.portal.aop.AopService;
@@ -24,12 +25,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.lang.reflect.Field;
+
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -50,8 +56,13 @@ public abstract class GuestbookServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>GuestbookService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.docs.guestbook.service.GuestbookServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>GuestbookService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>GuestbookServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -62,6 +73,8 @@ public abstract class GuestbookServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		guestbookService = (GuestbookService)aopProxy;
+
+		_setServiceUtilService(guestbookService);
 	}
 
 	/**
@@ -103,6 +116,20 @@ public abstract class GuestbookServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(GuestbookService guestbookService) {
+		try {
+			Field field = GuestbookServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, guestbookService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 
@@ -156,5 +183,8 @@ public abstract class GuestbookServiceBaseImpl
 	@Reference
 	protected com.liferay.asset.kernel.service.AssetLinkLocalService
 		assetLinkLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GuestbookServiceBaseImpl.class);
 
 }

@@ -14,9 +14,16 @@
 
 package com.liferay.docs.guestbook.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.docs.guestbook.model.GuestbookEntry;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for GuestbookEntry. This utility wraps
@@ -48,19 +55,17 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param guestbookEntry the guestbook entry
 	 * @return the guestbook entry that was added
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-		addGuestbookEntry(
-			com.liferay.docs.guestbook.model.GuestbookEntry guestbookEntry) {
+	public static GuestbookEntry addGuestbookEntry(
+		GuestbookEntry guestbookEntry) {
 
 		return getService().addGuestbookEntry(guestbookEntry);
 	}
 
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-			addGuestbookEntry(
-				long userId, long guestbookId, String name, String email,
-				String message,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static GuestbookEntry addGuestbookEntry(
+			long userId, long guestbookId, String name, String email,
+			String message,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addGuestbookEntry(
 			userId, guestbookId, name, email, message, serviceContext);
@@ -72,10 +77,18 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param entryId the primary key for the new guestbook entry
 	 * @return the new guestbook entry
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-		createGuestbookEntry(long entryId) {
-
+	public static GuestbookEntry createGuestbookEntry(long entryId) {
 		return getService().createGuestbookEntry(entryId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
+
+		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -89,10 +102,9 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @return the guestbook entry that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-			deleteGuestbookEntry(
-				com.liferay.docs.guestbook.model.GuestbookEntry guestbookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static GuestbookEntry deleteGuestbookEntry(
+			GuestbookEntry guestbookEntry)
+		throws PortalException {
 
 		return getService().deleteGuestbookEntry(guestbookEntry);
 	}
@@ -108,9 +120,8 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @return the guestbook entry that was removed
 	 * @throws PortalException if a guestbook entry with the primary key could not be found
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-			deleteGuestbookEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static GuestbookEntry deleteGuestbookEntry(long entryId)
+		throws PortalException {
 
 		return getService().deleteGuestbookEntry(entryId);
 	}
@@ -118,17 +129,14 @@ public class GuestbookEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -138,9 +146,7 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -156,9 +162,8 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -176,10 +181,9 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -191,9 +195,7 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -205,15 +207,13 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-		fetchGuestbookEntry(long entryId) {
-
+	public static GuestbookEntry fetchGuestbookEntry(long entryId) {
 		return getService().fetchGuestbookEntry(entryId);
 	}
 
@@ -224,13 +224,13 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching guestbook entry, or <code>null</code> if a matching guestbook entry could not be found
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-		fetchGuestbookEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static GuestbookEntry fetchGuestbookEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchGuestbookEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static java.util.List<Long> findGuestbookEntriesIds(
+	public static List<Long> findGuestbookEntriesIds(
 		long groupId, long guestbookId) {
 
 		return getService().findGuestbookEntriesIds(groupId, guestbookId);
@@ -250,19 +250,15 @@ public class GuestbookEntryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry>
-			getFilteredGuestbookEntries(long groupId, long guestbookId) {
+	public static List<GuestbookEntry> getFilteredGuestbookEntries(
+		long groupId, long guestbookId) {
 
 		return getService().getFilteredGuestbookEntries(groupId, guestbookId);
 	}
 
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry>
-				getFilteredGuestbookEntries(
-					long groupId, long guestbookId, int status, int start,
-					int end)
-			throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<GuestbookEntry> getFilteredGuestbookEntries(
+			long groupId, long guestbookId, int status, int start, int end)
+		throws SystemException {
 
 		return getService().getFilteredGuestbookEntries(
 			groupId, guestbookId, status, start, end);
@@ -286,43 +282,35 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of guestbook entries (not inclusive)
 	 * @return the range of guestbook entries
 	 */
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry> getGuestbookEntries(
-			int start, int end) {
-
+	public static List<GuestbookEntry> getGuestbookEntries(int start, int end) {
 		return getService().getGuestbookEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry> getGuestbookEntries(
-			long groupId, long guestbookId) {
+	public static List<GuestbookEntry> getGuestbookEntries(
+		long groupId, long guestbookId) {
 
 		return getService().getGuestbookEntries(groupId, guestbookId);
 	}
 
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry> getGuestbookEntries(
-				long groupId, long guestbookId, int start, int end)
-			throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<GuestbookEntry> getGuestbookEntries(
+			long groupId, long guestbookId, int start, int end)
+		throws SystemException {
 
 		return getService().getGuestbookEntries(
 			groupId, guestbookId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry> getGuestbookEntries(
-				long groupId, long guestbookId, int status, int start, int end)
-			throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<GuestbookEntry> getGuestbookEntries(
+			long groupId, long guestbookId, int status, int start, int end)
+		throws SystemException {
 
 		return getService().getGuestbookEntries(
 			groupId, guestbookId, status, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry> getGuestbookEntries(
-			long groupId, long guestbookId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.docs.guestbook.model.GuestbookEntry> obc) {
+	public static List<GuestbookEntry> getGuestbookEntries(
+		long groupId, long guestbookId, int start, int end,
+		OrderByComparator<GuestbookEntry> obc) {
 
 		return getService().getGuestbookEntries(
 			groupId, guestbookId, start, end, obc);
@@ -335,9 +323,8 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching guestbook entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry>
-			getGuestbookEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<GuestbookEntry> getGuestbookEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getGuestbookEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -353,13 +340,9 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching guestbook entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.docs.guestbook.model.GuestbookEntry>
-			getGuestbookEntriesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.docs.guestbook.model.GuestbookEntry>
-						orderByComparator) {
+	public static List<GuestbookEntry> getGuestbookEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<GuestbookEntry> orderByComparator) {
 
 		return getService().getGuestbookEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -380,7 +363,7 @@ public class GuestbookEntryLocalServiceUtil {
 
 	public static int getGuestbookEntriesCount(
 			long groupId, long guestbookId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws SystemException {
 
 		return getService().getGuestbookEntriesCount(
 			groupId, guestbookId, status);
@@ -393,9 +376,8 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @return the guestbook entry
 	 * @throws PortalException if a guestbook entry with the primary key could not be found
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-			getGuestbookEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static GuestbookEntry getGuestbookEntry(long entryId)
+		throws PortalException {
 
 		return getService().getGuestbookEntry(entryId);
 	}
@@ -408,9 +390,9 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @return the matching guestbook entry
 	 * @throws PortalException if a matching guestbook entry could not be found
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-			getGuestbookEntryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static GuestbookEntry getGuestbookEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getGuestbookEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -434,9 +416,8 @@ public class GuestbookEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -451,57 +432,35 @@ public class GuestbookEntryLocalServiceUtil {
 	 * @param guestbookEntry the guestbook entry
 	 * @return the guestbook entry that was updated
 	 */
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-		updateGuestbookEntry(
-			com.liferay.docs.guestbook.model.GuestbookEntry guestbookEntry) {
+	public static GuestbookEntry updateGuestbookEntry(
+		GuestbookEntry guestbookEntry) {
 
 		return getService().updateGuestbookEntry(guestbookEntry);
 	}
 
-	public static com.liferay.docs.guestbook.model.GuestbookEntry
-			updateGuestbookEntry(
-				long userId, long guestbookId, long entryId, String name,
-				String email, String message,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
+	public static GuestbookEntry updateGuestbookEntry(
+			long userId, long guestbookId, long entryId, String name,
+			String email, String message,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
 
 		return getService().updateGuestbookEntry(
 			userId, guestbookId, entryId, name, email, message, serviceContext);
 	}
 
-	public static com.liferay.docs.guestbook.model.GuestbookEntry updateStatus(
+	public static GuestbookEntry updateStatus(
 			long userId, long guestbookId, long entryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
+		throws PortalException, SystemException {
 
 		return getService().updateStatus(
 			userId, guestbookId, entryId, status, serviceContext);
 	}
 
 	public static GuestbookEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<GuestbookEntryLocalService, GuestbookEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			GuestbookEntryLocalService.class);
-
-		ServiceTracker<GuestbookEntryLocalService, GuestbookEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<GuestbookEntryLocalService, GuestbookEntryLocalService>(
-						bundle.getBundleContext(),
-						GuestbookEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile GuestbookEntryLocalService _service;
 
 }

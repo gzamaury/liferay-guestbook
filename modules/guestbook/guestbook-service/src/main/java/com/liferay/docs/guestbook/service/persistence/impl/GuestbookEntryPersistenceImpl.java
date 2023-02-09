@@ -19,9 +19,11 @@ import com.liferay.docs.guestbook.model.GuestbookEntry;
 import com.liferay.docs.guestbook.model.impl.GuestbookEntryImpl;
 import com.liferay.docs.guestbook.model.impl.GuestbookEntryModelImpl;
 import com.liferay.docs.guestbook.service.persistence.GuestbookEntryPersistence;
+import com.liferay.docs.guestbook.service.persistence.GuestbookEntryUtil;
 import com.liferay.docs.guestbook.service.persistence.impl.constants.GBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -33,13 +35,17 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,17 +53,22 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -260,10 +271,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -615,8 +622,6 @@ public class GuestbookEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -774,11 +779,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -867,8 +867,6 @@ public class GuestbookEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1069,10 +1067,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1455,8 +1449,6 @@ public class GuestbookEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1644,10 +1636,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2353,8 +2341,6 @@ public class GuestbookEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2576,10 +2562,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2907,8 +2889,6 @@ public class GuestbookEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3102,10 +3082,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3846,8 +3822,6 @@ public class GuestbookEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3946,8 +3920,8 @@ public class GuestbookEntryPersistenceImpl
 	@Override
 	public void cacheResult(GuestbookEntry guestbookEntry) {
 		entityCache.putResult(
-			entityCacheEnabled, GuestbookEntryImpl.class,
-			guestbookEntry.getPrimaryKey(), guestbookEntry);
+			GuestbookEntryImpl.class, guestbookEntry.getPrimaryKey(),
+			guestbookEntry);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -3955,9 +3929,9 @@ public class GuestbookEntryPersistenceImpl
 				guestbookEntry.getUuid(), guestbookEntry.getGroupId()
 			},
 			guestbookEntry);
-
-		guestbookEntry.resetOriginalValues();
 	}
+
+	private int _valueObjectFinderCacheListThreshold;
 
 	/**
 	 * Caches the guestbook entries in the entity cache if it is enabled.
@@ -3966,15 +3940,20 @@ public class GuestbookEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(List<GuestbookEntry> guestbookEntries) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (guestbookEntries.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
 		for (GuestbookEntry guestbookEntry : guestbookEntries) {
 			if (entityCache.getResult(
-					entityCacheEnabled, GuestbookEntryImpl.class,
-					guestbookEntry.getPrimaryKey()) == null) {
+					GuestbookEntryImpl.class, guestbookEntry.getPrimaryKey()) ==
+						null) {
 
 				cacheResult(guestbookEntry);
-			}
-			else {
-				guestbookEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -4004,39 +3983,24 @@ public class GuestbookEntryPersistenceImpl
 	 */
 	@Override
 	public void clearCache(GuestbookEntry guestbookEntry) {
-		entityCache.removeResult(
-			entityCacheEnabled, GuestbookEntryImpl.class,
-			guestbookEntry.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((GuestbookEntryModelImpl)guestbookEntry, true);
+		entityCache.removeResult(GuestbookEntryImpl.class, guestbookEntry);
 	}
 
 	@Override
 	public void clearCache(List<GuestbookEntry> guestbookEntries) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (GuestbookEntry guestbookEntry : guestbookEntries) {
-			entityCache.removeResult(
-				entityCacheEnabled, GuestbookEntryImpl.class,
-				guestbookEntry.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(GuestbookEntryModelImpl)guestbookEntry, true);
+			entityCache.removeResult(GuestbookEntryImpl.class, guestbookEntry);
 		}
 	}
 
+	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, GuestbookEntryImpl.class, primaryKey);
+			entityCache.removeResult(GuestbookEntryImpl.class, primaryKey);
 		}
 	}
 
@@ -4052,32 +4016,6 @@ public class GuestbookEntryPersistenceImpl
 			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, guestbookEntryModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		GuestbookEntryModelImpl guestbookEntryModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				guestbookEntryModelImpl.getUuid(),
-				guestbookEntryModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUUID_G, args);
-			finderCache.removeResult(_finderPathFetchByUUID_G, args);
-		}
-
-		if ((guestbookEntryModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				guestbookEntryModelImpl.getOriginalUuid(),
-				guestbookEntryModelImpl.getOriginalGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUUID_G, args);
-			finderCache.removeResult(_finderPathFetchByUUID_G, args);
-		}
 	}
 
 	/**
@@ -4221,24 +4159,25 @@ public class GuestbookEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (guestbookEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				guestbookEntry.setCreateDate(now);
+				guestbookEntry.setCreateDate(date);
 			}
 			else {
-				guestbookEntry.setCreateDate(serviceContext.getCreateDate(now));
+				guestbookEntry.setCreateDate(
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!guestbookEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				guestbookEntry.setModifiedDate(now);
+				guestbookEntry.setModifiedDate(date);
 			}
 			else {
 				guestbookEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4249,8 +4188,6 @@ public class GuestbookEntryPersistenceImpl
 
 			if (isNew) {
 				session.save(guestbookEntry);
-
-				guestbookEntry.setNew(false);
 			}
 			else {
 				guestbookEntry = (GuestbookEntry)session.merge(guestbookEntry);
@@ -4263,173 +4200,14 @@ public class GuestbookEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
-			Object[] args = new Object[] {guestbookEntryModelImpl.getUuid()};
-
-			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid, args);
-
-			args = new Object[] {
-				guestbookEntryModelImpl.getUuid(),
-				guestbookEntryModelImpl.getCompanyId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			args = new Object[] {
-				guestbookEntryModelImpl.getGroupId(),
-				guestbookEntryModelImpl.getGuestbookId()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_G, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_G, args);
-
-			args = new Object[] {guestbookEntryModelImpl.getStatus()};
-
-			finderCache.removeResult(_finderPathCountByStatus, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByStatus, args);
-
-			args = new Object[] {
-				guestbookEntryModelImpl.getGroupId(),
-				guestbookEntryModelImpl.getGuestbookId(),
-				guestbookEntryModelImpl.getStatus()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_G_S, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_G_S, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((guestbookEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					guestbookEntryModelImpl.getOriginalUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-
-				args = new Object[] {guestbookEntryModelImpl.getUuid()};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-			}
-
-			if ((guestbookEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					guestbookEntryModelImpl.getOriginalUuid(),
-					guestbookEntryModelImpl.getOriginalCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-
-				args = new Object[] {
-					guestbookEntryModelImpl.getUuid(),
-					guestbookEntryModelImpl.getCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-			}
-
-			if ((guestbookEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_G.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					guestbookEntryModelImpl.getOriginalGroupId(),
-					guestbookEntryModelImpl.getOriginalGuestbookId()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_G, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_G, args);
-
-				args = new Object[] {
-					guestbookEntryModelImpl.getGroupId(),
-					guestbookEntryModelImpl.getGuestbookId()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_G, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_G, args);
-			}
-
-			if ((guestbookEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByStatus.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					guestbookEntryModelImpl.getOriginalStatus()
-				};
-
-				finderCache.removeResult(_finderPathCountByStatus, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByStatus, args);
-
-				args = new Object[] {guestbookEntryModelImpl.getStatus()};
-
-				finderCache.removeResult(_finderPathCountByStatus, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByStatus, args);
-			}
-
-			if ((guestbookEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_G_S.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					guestbookEntryModelImpl.getOriginalGroupId(),
-					guestbookEntryModelImpl.getOriginalGuestbookId(),
-					guestbookEntryModelImpl.getOriginalStatus()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_G_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_G_S, args);
-
-				args = new Object[] {
-					guestbookEntryModelImpl.getGroupId(),
-					guestbookEntryModelImpl.getGuestbookId(),
-					guestbookEntryModelImpl.getStatus()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_G_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_G_S, args);
-			}
-		}
-
 		entityCache.putResult(
-			entityCacheEnabled, GuestbookEntryImpl.class,
-			guestbookEntry.getPrimaryKey(), guestbookEntry, false);
+			GuestbookEntryImpl.class, guestbookEntryModelImpl, false, true);
 
-		clearUniqueFindersCache(guestbookEntryModelImpl, false);
 		cacheUniqueFindersCache(guestbookEntryModelImpl);
+
+		if (isNew) {
+			guestbookEntry.setNew(false);
+		}
 
 		guestbookEntry.resetOriginalValues();
 
@@ -4611,10 +4389,6 @@ public class GuestbookEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4660,9 +4434,6 @@ public class GuestbookEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4702,157 +4473,170 @@ public class GuestbookEntryPersistenceImpl
 	 * Initializes the guestbook entry persistence.
 	 */
 	@Activate
-	public void activate() {
-		GuestbookEntryModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		GuestbookEntryModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+	public void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class, new GuestbookEntryModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", GuestbookEntry.class.getName()));
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
-			GuestbookEntryModelImpl.UUID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			true);
 
-		_finderPathCountByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathCountByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			false);
 
-		_finderPathFetchByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathFetchByUUID_G = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			GuestbookEntryModelImpl.UUID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathCountByUUID_G = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			GuestbookEntryModelImpl.UUID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathCountByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()});
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByG_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithPaginationFindByG_G = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_G",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId", "guestbookId"}, true);
 
-		_finderPathWithoutPaginationFindByG_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithoutPaginationFindByG_G = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_G",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			GuestbookEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.GUESTBOOKID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {"groupId", "guestbookId"}, true);
 
-		_finderPathCountByG_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathCountByG_G = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_G",
-			new String[] {Long.class.getName(), Long.class.getName()});
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"groupId", "guestbookId"}, false);
 
-		_finderPathWithPaginationFindByStatus = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithPaginationFindByStatus = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
 			new String[] {
 				Integer.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"status"}, true);
 
-		_finderPathWithoutPaginationFindByStatus = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithoutPaginationFindByStatus = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
-			new String[] {Integer.class.getName()},
-			GuestbookEntryModelImpl.STATUS_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {Integer.class.getName()}, new String[] {"status"},
+			true);
 
-		_finderPathCountByStatus = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathCountByStatus = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
-			new String[] {Integer.class.getName()});
+			new String[] {Integer.class.getName()}, new String[] {"status"},
+			false);
 
-		_finderPathWithPaginationFindByG_G_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithPaginationFindByG_G_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_G_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId", "guestbookId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByG_G_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, GuestbookEntryImpl.class,
+		_finderPathWithoutPaginationFindByG_G_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_G_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			GuestbookEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.GUESTBOOKID_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.STATUS_COLUMN_BITMASK |
-			GuestbookEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {"groupId", "guestbookId", "status"}, true);
 
-		_finderPathCountByG_G_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
+		_finderPathCountByG_G_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_G_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
-			});
+			},
+			new String[] {"groupId", "guestbookId", "status"}, false);
+
+		_setGuestbookEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		_setGuestbookEntryUtilPersistence(null);
+
 		entityCache.removeCache(GuestbookEntryImpl.class.getName());
 
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+	}
+
+	private void _setGuestbookEntryUtilPersistence(
+		GuestbookEntryPersistence guestbookEntryPersistence) {
+
+		try {
+			Field field = GuestbookEntryUtil.class.getDeclaredField(
+				"_persistence");
+
+			field.setAccessible(true);
+
+			field.set(null, guestbookEntryPersistence);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
 	}
 
 	@Override
@@ -4861,12 +4645,6 @@ public class GuestbookEntryPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.docs.guestbook.model.GuestbookEntry"),
-			true);
 	}
 
 	@Override
@@ -4887,7 +4665,7 @@ public class GuestbookEntryPersistenceImpl
 		super.setSessionFactory(sessionFactory);
 	}
 
-	private boolean _columnBitmaskEnabled;
+	private BundleContext _bundleContext;
 
 	@Reference
 	protected EntityCache entityCache;
@@ -4944,13 +4722,124 @@ public class GuestbookEntryPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
-	static {
-		try {
-			Class.forName(GBPersistenceConstants.class.getName());
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
 		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
+
+		return finderPath;
+	}
+
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+
+	private static class GuestbookEntryModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return new Object[0];
+				}
+
+				return null;
+			}
+
+			GuestbookEntryModelImpl guestbookEntryModelImpl =
+				(GuestbookEntryModelImpl)baseModel;
+
+			long columnBitmask = guestbookEntryModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					guestbookEntryModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						guestbookEntryModelImpl.getColumnBitmask(columnName);
+				}
+
+				if (finderPath.isBaseModelResult() &&
+					(GuestbookEntryPersistenceImpl.
+						FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+							finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					guestbookEntryModelImpl, columnNames, original);
+			}
+
+			return null;
 		}
+
+		private static Object[] _getValue(
+			GuestbookEntryModelImpl guestbookEntryModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						guestbookEntryModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] = guestbookEntryModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= GuestbookEntryModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
+
 	}
 
 }

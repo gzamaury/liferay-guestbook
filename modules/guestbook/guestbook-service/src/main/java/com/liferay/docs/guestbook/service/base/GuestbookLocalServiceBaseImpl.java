@@ -16,6 +16,7 @@ package com.liferay.docs.guestbook.service.base;
 
 import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.service.GuestbookLocalService;
+import com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil;
 import com.liferay.docs.guestbook.service.persistence.GuestbookEntryPersistence;
 import com.liferay.docs.guestbook.service.persistence.GuestbookPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -44,6 +45,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
@@ -58,10 +61,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,7 +88,7 @@ public abstract class GuestbookLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>GuestbookLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>GuestbookLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>GuestbookLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -410,6 +416,15 @@ public abstract class GuestbookLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return guestbookPersistence.create(((Long)primaryKeyObj).longValue());
+	}
+
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
@@ -521,6 +536,11 @@ public abstract class GuestbookLocalServiceBaseImpl
 		return guestbookPersistence.update(guestbook);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -532,6 +552,8 @@ public abstract class GuestbookLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		guestbookLocalService = (GuestbookLocalService)aopProxy;
+
+		_setLocalServiceUtilService(guestbookLocalService);
 	}
 
 	/**
@@ -576,6 +598,22 @@ public abstract class GuestbookLocalServiceBaseImpl
 		}
 	}
 
+	private void _setLocalServiceUtilService(
+		GuestbookLocalService guestbookLocalService) {
+
+		try {
+			Field field = GuestbookLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, guestbookLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
+	}
+
 	protected GuestbookLocalService guestbookLocalService;
 
 	@Reference
@@ -611,5 +649,8 @@ public abstract class GuestbookLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.asset.kernel.service.AssetLinkLocalService
 		assetLinkLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GuestbookLocalServiceBaseImpl.class);
 
 }

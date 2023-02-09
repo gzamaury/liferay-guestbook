@@ -73,6 +73,17 @@ public class GuestbookLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _guestbookLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the guestbook from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>

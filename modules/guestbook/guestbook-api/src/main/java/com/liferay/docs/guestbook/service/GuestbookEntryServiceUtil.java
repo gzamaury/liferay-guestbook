@@ -14,10 +14,6 @@
 
 package com.liferay.docs.guestbook.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for GuestbookEntry. This utility wraps
  * <code>com.liferay.docs.guestbook.service.impl.GuestbookEntryServiceImpl</code> and is an
@@ -43,30 +39,14 @@ public class GuestbookEntryServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static GuestbookEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<GuestbookEntryService, GuestbookEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(GuestbookEntryService.class);
-
-		ServiceTracker<GuestbookEntryService, GuestbookEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<GuestbookEntryService, GuestbookEntryService>(
-						bundle.getBundleContext(), GuestbookEntryService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile GuestbookEntryService _service;
 
 }
