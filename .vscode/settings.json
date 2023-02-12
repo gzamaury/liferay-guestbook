@@ -1,4 +1,8 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "java.project.importOnFirstTimeStartup": "interactive"
+    // "java.project.importOnFirstTimeStartup": "interactive",
+    // "java.import.generatesMetadataFilesAtProjectRoot": true,
+    "java.server.launchMode": "LightWeight",
+    // "java.import.gradle.wrapper.enabled": true
+    // "java.import.gradle.home": "/usr/local/sdkman/candidates/java/current",
 }
